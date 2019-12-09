@@ -7,7 +7,6 @@ import {NavLink } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import BitcoinLogo from '../images/icons/bitcoin-logo.svg';
 import jwt_decode from 'jwt-decode';
-import Timestamp from 'react-timestamp'
 
 class Wallet extends Component {
   constructor(props) {
@@ -52,21 +51,21 @@ class Wallet extends Component {
 
   ageCalculator() {
     var currentDate = new Date().getTime() / 1000; // UNIX time
-    var demoReg = new Date('Dec 01 2019 16:20:00').getTime() / 1000;
+    // var demoReg = new Date('Mar 28 2018 16:20:00').getTime() / 1000;
     var regDate = new Date(this.state.reg_date).getTime() / 1000; // UNIX time
-    var diff = (currentDate - demoReg);
+    var diff = (currentDate - regDate);
     if (diff <= 3600) {
-      return diff / 60 + " minutes"
+      return (diff / 60).toFixed(0) + " minutes"
     } else if (diff <= 84600) {
-      return diff / 3600 + " hours"
+      return (diff / 3600).toFixed(2) + " hours"
     } else if (diff <= 604800) {
-      return diff / 84600 + " days"
+      return (diff / 84600).toFixed(2) + " days"
     } else if (diff <= 2629743.83) {
-      return diff / 604800 + " weeks"
+      return (diff / 604800).toFixed(2) + " weeks"
     } else if (diff <= 31556926) {
-      return diff / 2629743.83 + " months"
+      return (diff / 2629743.83).toFixed(2) + " months"
     } else {
-      return diff / 31556926 + " years"
+      return (diff / 31556926).toFixed(2) + " years"
     }
   }
 
@@ -102,10 +101,10 @@ class Wallet extends Component {
             <Row>
               <Col sm={4}></Col>
               <Col sm={4}>
-                <h3>Wallet Name: {this.state.wallet_name}</h3>
+                <h3> {this.state.wallet_name}</h3>
                 <img src={BitcoinLogo} alt="bitcoin-logo"/>
                 <div className="balanceContainer">
-                  <h2 className="btcBalance">3.4721 BTC</h2>
+                  <h2 className="btcBalance">{this.state.balance_btc} BTC</h2>
                   <h4 className="btcBalanceUSD">$ 24,748.25</h4>
                 </div>
               </Col>

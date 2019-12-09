@@ -13,6 +13,12 @@ import Col from 'react-bootstrap/Col';
 import logo from '../images/logo-hive.svg';
 
 class Navbar extends Component {
+  logOut(e) {
+    e.preventDefault()
+    localStorage.removeItem('usertoken')
+    this.props.history.push(`/`)
+  }
+
   render() {
     return (
       <Col sm={3} className="sideMenu">
@@ -54,10 +60,10 @@ class Navbar extends Component {
           </li>
 
           <li className="nav-item">
-            <NavLink exact activeClassName="active" to="/" className="nav-link underline-from-center">
+            <a href="" onClick={this.logOut.bind(this)} to="/register" className="nav-link underline-from-center">
               <img src={LogOutDes} alt="img"/>
               <span>Log Out</span>
-            </NavLink>
+            </a>
           </li>
         </ul>
       </Col>

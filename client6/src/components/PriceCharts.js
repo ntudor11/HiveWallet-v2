@@ -5,13 +5,16 @@ import Container from 'react-bootstrap/Container';
 import Navbar from '../components/Navbar';
 import BitcoinLogo from '../images/icons/bitcoin-logo.svg';
 import { Line } from 'react-chartjs-2';
-
-// var coininfo = require('coininfo')
+import jwt_decode from 'jwt-decode'
 
 class PriceCharts extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      wallet_name: '',
+      public_key: '',
+      balance_btc: '',
+      reg_date: '',
       data: {},
       chartData:{
         labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
@@ -42,19 +45,27 @@ class PriceCharts extends Component {
   }
 
   componentDidMount() {
-    fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
-    .then(res => res.json())
-    .then(json => {
-      this.setState({
-        data: json
+    const token = localStorage.usertoken
+    const decoded = jwt_decode(token)
+    this.setState({
+      wallet_name: decoded.wallet_name,
+      public_key: decoded.public_key,
+      balance_btc: decoded.balance_btc,
+      reg_date: decoded.reg_date
+    }, () => {
+      fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          data: json
+        });
       });
-    });
+    })
   }
 
   render() {
     const { data } = this.state;
     console.log(data);
-    // console.log(coininfo('BTC'));
 
     return (
       <Container fluid className="h-100">
