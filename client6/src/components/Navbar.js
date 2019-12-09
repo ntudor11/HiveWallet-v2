@@ -60,7 +60,7 @@ class Navbar extends Component {
           </li>
 
           <li className="nav-item">
-            <a href="" onClick={this.logOut.bind(this)} to="/register" className="nav-link underline-from-center">
+            <a href="#" onClick={this.logOut.bind(this)} to="/register" className="nav-link underline-from-center">
               <img src={LogOutDes} alt="img"/>
               <span>Log Out</span>
             </a>

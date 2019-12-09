@@ -15,19 +15,37 @@ class PriceCharts extends Component {
       public_key: '',
       balance_btc: '',
       reg_date: '',
-      data: {},
-      chartData:{
-        labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
-        datasets:[
+      data: {
+        labels: [],
+        datasets: []
+      },
+      chartData: {
+        labels: [
+          "2019-11-08",
+          "2019-11-09",
+          "2019-11-10",
+          "2019-11-11",
+          "2019-11-12",
+          "2019-11-13",
+          "2019-11-14",
+          "2019-11-15",
+          "2019-11-16",
+          "2019-11-17"
+        ],
+        datasets: [
           {
-            label:'Population',
+            label: 'Value (USD)',
             data: [
-              617594,
-              181045,
-              153060,
-              840401,
-              105162,
-              95072
+              8770.3617,
+              8813.3567,
+              9044,
+              8726.36,
+              8820.2333,
+              8775.1017,
+              8639.1833,
+              8471.2783,
+              8496.6,
+              8516.08
             ],
             backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
@@ -58,14 +76,28 @@ class PriceCharts extends Component {
       .then(json => {
         this.setState({
           data: json
+          // data.labels:
         });
       });
     })
   }
 
+  getLatestBtc() { // returns the oldest value
+    var lastProp;
+    for (var key in this.state.data.bpi) {
+      if(this.state.data.bpi.hasOwnProperty(key)) {
+        lastProp = this.state.data.bpi[key];
+        // console.log(key+ " " + firstProp);
+      }
+    }
+    return lastProp;
+  }
+
   render() {
     const { data } = this.state;
     console.log(data);
+
+    this.getLatestBtc();
 
     return (
       <Container fluid className="h-100">
@@ -82,7 +114,7 @@ class PriceCharts extends Component {
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder">
                   <p className="walletKpiName">Current Value</p>
-                  <h3 className="walletKpiValue">$ 7,066.84</h3>
+                  <h3 className="walletKpiValue">$ {this.getLatestBtc()}</h3>
                 </div>
               </Col>
 
@@ -109,7 +141,7 @@ class PriceCharts extends Component {
               <Col sm={2}></Col>
               <Col sm={8}>
                 <p className="disclaimer">{this.state.data.disclaimer}</p>
-                <code>{JSON.stringify(this.state.data.bpi)}</code>
+                <code>{JSON.stringify(data.bpi)}</code>
               </Col>
               <Col sm={2}></Col>
             </Row>
