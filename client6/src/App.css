@@ -1,0 +1,260 @@
+@font-face {
+  font-family: menuFont;
+  src: url("./components/fonts/JosefinSans-Light.ttf");
+}
+
+@font-face {
+  font-family: josefinSansRegular;
+  src: url("./components/fonts/JosefinSans-Regular.ttf");
+}
+
+.App {
+  text-align: center;
+  background-image: linear-gradient(rgba(36,59,85, 0), rgba(20,30,48, 0)), url("./images/bg-connections.svg");
+  background-position: center, top left;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed, fixed;
+  background-color: rgba(36,59,85,1);
+  font-family: menuFont;
+}
+
+h1, h2, h3 {
+  font-family: josefinSansRegular;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sideMenu {
+  background-color: rgba(54,61,83,.8);
+}
+
+.content {
+
+}
+
+.sideMenu, .content {
+  min-height: 100vh;
+  color: #fff;
+}
+
+.nav-item {
+  text-align: left;
+  margin-bottom:.5em;
+}
+
+ .nav-item a {
+  color: #fff;
+  transition:.2s;
+}
+
+.nav-item span {
+  font-family: menuFont;
+  margin-left:10px;
+}
+
+.nav-item a:hover {
+  color:#fff;
+  filter: invert(.5) sepia(1) saturate(20);
+}
+
+.nav-item .active {
+  color: #FD7E23 !important;
+  filter: invert(.5) sepia(1) saturate(20);
+}
+
+.logoContainer {
+  margin-top:1.5em;
+}
+
+.logoContainer .logoFront {
+  width:250px;
+}
+
+.sideMenu #logo {
+  width:100%;
+  margin-top:2em;
+  margin-bottom:4em;
+}
+
+.frontColsButtons {
+  margin-top:4em;
+}
+
+.colsButtons a:hover, .colsButtons a:active {
+  text-decoration:none;
+}
+
+.colsButtons button {
+  margin:5px;
+  border-radius:0px;
+  outline:0px !important;
+  -webkit-appearance:none !important;
+  box-shadow: none !important;
+}
+
+.colsButtons .btn-primary {
+  background-color: #FD7E23;
+  border-color: #FD7E23;
+  color: #1A293E;
+}
+
+.colsButtons .btn-primary:hover, .colsButtons .btn-primary:focus {
+  background-color: rgba(0,0,0,0);
+  border-color: #FD7E23;
+  color: #FD7E23;
+}
+
+.colsButtons .btn-outline-primary {
+  background-color: rgba(0,0,0,0);
+  border-color: #fff;
+  color: #fff;
+}
+.colsButtons .btn-outline-primary:hover {
+    background-color: rgba(0,0,0,0);
+    border-color: #FD7E23;
+    color: #FD7E23;
+}
+
+.alert {
+  text-align: left;
+  border-radius: 0 !important;
+  background-color: rgba(0,0,0,0) !important;
+}
+
+.alert-info p, .alert-info .alertHeading {
+  color: #fff;
+}
+
+.alert .alertHeading {
+  font-size:inherit !important;
+  font-family: josefinSansRegular;
+  margin-bottom: 0;
+}
+
+.alert-warning {
+  border: 1px solid #FD7E23 !important;
+}
+
+.alert-warning p, .alert-warning .alertHeading {
+  color: #FD7E23;
+}
+
+.alert-warning .infoIcon {
+  filter: invert(.5) sepia(1) saturate(20);
+}
+
+.formTemplate input, .formTemplate select, .formTemplate textarea {
+  background-color: rgba(0,0,0,0);
+  border-bottom: 1px solid #fff;
+  border-radius: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  outline:0px !important;
+  -webkit-appearance:none !important;
+  box-shadow: none !important;
+}
+
+.formTemplate input:focus, .formTemplate select:focus, .formTemplate textarea:focus {
+  border-bottom: 1px solid #FD7E23;
+  background-color: rgba(0,0,0,0);
+}
+
+.formTemplate input::-webkit-input-placeholder, .formTemplate textarea::-webkit-input-placeholder {
+  color: #fff !important;
+  opacity: 1; /* Firefox */
+  transition:0.2s;
+}
+
+.form-control[readonly] {
+  background-color:rgba(0,0,0,0) !important;
+}
+
+.formSendBtc {
+  margin-bottom:0px !important;
+}
+
+#formSendUsd {
+  border:0px;
+  font-size:10pt;
+}
+
+#formNewWallet {
+  margin-bottom:1em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+.formTemplate .form-control {
+  color: #fff !important;
+}
+
+.walletKpi {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  padding-top:10px;
+  padding-bottom:10px;
+  margin-bottom:5em;
+}
+
+.walletKpi .kpiHolder{
+  border-right: 1px solid #fff;
+}
+
+.walletKpi .kpiHolder-last {
+  border-right: 0px;
+}
+
+.balanceContainer {
+  margin-top:2em;
+}
+
+.transactionsTable {
+  max-width:100%;
+  margin-bottom:1em;
+}
+
+.transactionsTable tbody tr:nth-child(even) {
+  background-color: rgba(0,0,0,.25);
+}
+
+.tableHeader {
+  font-family: josefinSansRegular;
+  background-color: rgba(0,0,0,.5);
+}
+
+.settingsHeading {
+  font-family: josefinSansRegular;
+}
+
+#setting1container {
+  position: relative;
+}
+
+#setting1container form {
+  position: absolute;
+  bottom:0;
+  width:80%;
+}
+
+#currencySelector {
+  width:75px;
+  margin:0 auto;
+}
