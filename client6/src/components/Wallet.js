@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import {NavLink } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import BitcoinLogo from '../images/icons/bitcoin-logo.svg';
-import jwt_decode from 'jwt-decode'
+import jwt_decode from 'jwt-decode';
+import Timestamp from 'react-timestamp'
 
 class Wallet extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Wallet extends Component {
       wallet_name: decoded.wallet_name,
       public_key: decoded.public_key,
       balance_btc: decoded.balance_btc,
+      reg_date: decoded.reg_date,
       transaction_time: decoded.transaction_time
     }, () => {
       let self = this;
@@ -46,6 +48,26 @@ class Wallet extends Component {
       console.log("should work");
       console.log(this.state.wallet_name);
     })
+  }
+
+  ageCalculator() {
+    var currentDate = new Date().getTime() / 1000; // UNIX time
+    var demoReg = new Date('Dec 01 2019 16:20:00').getTime() / 1000;
+    var regDate = new Date(this.state.reg_date).getTime() / 1000; // UNIX time
+    var diff = (currentDate - demoReg);
+    if (diff <= 3600) {
+      return diff / 60 + " minutes"
+    } else if (diff <= 84600) {
+      return diff / 3600 + " hours"
+    } else if (diff <= 604800) {
+      return diff / 84600 + " days"
+    } else if (diff <= 2629743.83) {
+      return diff / 604800 + " weeks"
+    } else if (diff <= 31556926) {
+      return diff / 2629743.83 + " months"
+    } else {
+      return diff / 31556926 + " years"
+    }
   }
 
   render() {
@@ -72,7 +94,7 @@ class Wallet extends Component {
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder kpiHolder-last">
                   <p className="walletKpiName">Portfolio Age</p>
-                  <h3 className="walletKpiValue">1.2y</h3>
+                  <h3 className="walletKpiValue">{this.ageCalculator()}</h3>
                 </div>
               </Col>
             </Row>
@@ -80,6 +102,7 @@ class Wallet extends Component {
             <Row>
               <Col sm={4}></Col>
               <Col sm={4}>
+                <h3>Wallet Name: {this.state.wallet_name}</h3>
                 <img src={BitcoinLogo} alt="bitcoin-logo"/>
                 <div className="balanceContainer">
                   <h2 className="btcBalance">3.4721 BTC</h2>
