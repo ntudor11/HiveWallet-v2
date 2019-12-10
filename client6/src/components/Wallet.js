@@ -22,34 +22,6 @@ class Wallet extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   const token = localStorage.usertoken
-  //   const decoded = jwt_decode(token)
-  //   this.setState({
-  //     wallet_name: decoded.wallet_name,
-  //     public_key: decoded.public_key,
-  //     balance_btc: decoded.balance_btc,
-  //     reg_date: decoded.reg_date,
-  //     transaction_time: decoded.transaction_time
-  //   }, () => {
-  //     let self = this;
-  //     fetch('http://localhost:5000/wallets/walletslist', {
-  //         method: 'GET'
-  //     }).then(function(response) {
-  //         if (response.status >= 400) {
-  //             throw new Error("Bad response from server");
-  //         }
-  //         return response.json();
-  //     }).then(function(data) {
-  //         self.setState({transactions: data});
-  //     }).catch(err => {
-  //     console.log('caught it!',err);
-  //     })
-  //     console.log("should work");
-  //     console.log(this.state.wallet_name);
-  //   })
-  // }
-
   componentDidMount() {
     const token = localStorage.usertoken
     const decoded = jwt_decode(token)
@@ -85,47 +57,6 @@ class Wallet extends Component {
     })
   }
 
-  // tryFetch() {
-  //   fetch(person(this.state.person))
-  //   .then(response => {
-  //     if(!response.ok) {
-  //       throw Error("Network Request Failed");
-  //     }
-  //     return response
-  //   })
-  //   .then(d => d.json())
-  //   .then(d => {
-  //     this.setState({
-  //       cardData: d
-  //     })
-  //
-  //     fetch(`http://localhost:3008/planets/${d.homeworld}`)
-  //       .then(data => data.json())
-  //       .then(data => {
-  //         this.setState({
-  //           homeData: data
-  //         })
-  //       })
-  //   }, () => {
-  //     this.setState({
-  //       requestFailed: true
-  //     })
-  //   })
-  // }
-
-  getData() {
-    let firstAPICall = fetch("http://localhost:5000/wallets/walletslist");
-    let secondAPICall = fetch("https://api.coindesk.com/v1/bpi/historical/close.json");
-
-    Promise.all([firstAPICall, secondAPICall])
-    .then(values => Promise.all(values.map(value => value.json())))
-    .then(finalVals => {
-      let firstAPIResp = finalVals[0];
-      let secondAPIResp = finalVals[1];
-    });
-    return [firstAPICall, secondAPICall];
-  }
-
   ageCalculator() {
     var currentDate = new Date().getTime() / 1000; // UNIX time
     // var demoReg = new Date('Mar 28 2018 16:20:00').getTime() / 1000;
@@ -144,6 +75,33 @@ class Wallet extends Component {
     } else {
       return (diff / 31556926).toFixed(2) + " years"
     }
+  }
+
+  getLatestBtc() { // returns the oldest value
+    var lastProp;
+    for (var key in this.state.data.bpi) {
+      if(this.state.data.bpi.hasOwnProperty(key)) {
+        lastProp = this.state.data.bpi[key];
+        // console.log(key+ " " + firstProp);
+      }
+    }
+    return lastProp;
+  }
+
+  getLatestBtc() { // returns the oldest value
+    var lastProp;
+    for (var key in this.state.btc_data.bpi) {
+      if(this.state.btc_data.bpi.hasOwnProperty(key)) {
+        lastProp = this.state.btc_data.bpi[key];
+        // console.log(key+ " " + firstProp);
+      }
+    }
+    return lastProp;
+  }
+
+  btcToUsd() {
+    // const convertToUsd = (priceCharts.getLatestBtc() * this.state.balance_btc);
+    return (this.getLatestBtc() * this.state.balance_btc);
   }
 
   render() {
@@ -186,7 +144,7 @@ class Wallet extends Component {
                 <img src={BitcoinLogo} alt="bitcoin-logo"/>
                 <div className="balanceContainer">
                   <h2 className="btcBalance">{this.state.balance_btc} BTC</h2>
-                  <h4 className="btcBalanceUSD">$ 24,748.25</h4>
+                  <h4 className="btcBalanceUSD">$ {this.btcToUsd()}</h4>
                 </div>
               </Col>
               <Col sm={4}></Col>

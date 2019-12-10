@@ -153,4 +153,5 @@ class PriceCharts extends Component {
   }
 }
 
+// const priceCharts = new PriceCharts();
 export default PriceCharts;
