@@ -11,12 +11,14 @@ class History extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      id: '',
       wallet_name: '',
       public_key: '',
       balance_btc: '',
       reg_date: '',
       transaction_time: '',
-      transactions: []
+      transactions: [],
+      btc_data: {}
     }
   }
 
@@ -24,6 +26,7 @@ class History extends Component {
     const token = localStorage.usertoken
     const decoded = jwt_decode(token)
     this.setState({
+      id: decoded.id,
       wallet_name: decoded.wallet_name,
       public_key: decoded.public_key,
       balance_btc: decoded.balance_btc,
@@ -43,18 +46,50 @@ class History extends Component {
       }).catch(err => {
       console.log('caught it!',err);
       })
+      fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
+      .then(data => data.json())
+      .then(data => {
+        this.setState({
+          btc_data: data
+        })
+      })
       console.log("should work");
+      console.log(this.state.wallet_name);
     })
   }
 
+  getLatestBtc() { // returns the oldest value
+    var lastProp;
+    for (var key in this.state.btc_data.bpi) {
+      if(this.state.btc_data.bpi.hasOwnProperty(key)) {
+        lastProp = this.state.btc_data.bpi[key];
+        // console.log(key+ " " + firstProp);
+      }
+    }
+    return lastProp;
+  }
+
   render() {
+
+    const btcToUsd = (amountBtc, btcValue = this.getLatestBtc()) => {
+      return (amountBtc * btcValue);
+    }
+
     const transactionItem = this.state.transactions.map(transaction =>
       <tr key={transaction.id}>
-        <td>{transaction.sender_id} </td>
-        <td>{transaction.receiver_id}</td>
-        <td></td>
+        <td>d3m0...</td>
+        <td>
+          { this.state.id !== transaction.receiver_id ?
+            <span>Sent To</span> : <span>Received From</span>
+          }
+        </td>
+        <td>
+          { this.state.id !== transaction.receiver_id ?
+            <span>d3m0AdDr3sS / {transaction.receiver_id}</span> : <span>d3m0AdDr3sS / {transaction.sender_id}</span>
+          }
+        </td>
         <td><Timestamp options={{twentyFourHour: true}} date={transaction.transaction_time} /></td>
-        <td>{transaction.amount_btc} BTC</td>
+        <td>₿ {transaction.amount_btc} / <br/>$  {btcToUsd(transaction.amount_btc)}</td>
       </tr>
     )
 
@@ -77,43 +112,12 @@ class History extends Component {
                       <tr>
                           <th>Hash</th>
                           <th>Type</th>
-                          <th>Address</th>
+                          <th>Address / Wallet ID</th>
                           <th>Timestamp</th>
                           <th>Value (BTC/USD)</th>
                       </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>15531...</td>
-                      <td>Sent To</td>
-                      <td>1AxqrT6SqH7jmVVqci6dNsZLgojtPjkfHY</td>
-                      <td>22:31:42 2019.11.23</td>
-                      <td>₿ 2.03 / <br/> $ 14,264.32</td>
-                    </tr>
-
-                    <tr>
-                      <td>12cac...</td>
-                      <td>Received From</td>
-                      <td>16tDnuNzLgTmWuK8nTaE82dnz2J58nVzpd</td>
-                      <td>17:48:05 2019.09.12</td>
-                      <td>₿ 2.03 /<br/> $ 14,264.32</td>
-                    </tr>
-
-                    <tr>
-                      <td>12c32...</td>
-                      <td>Received From</td>
-                      <td>16tDnuNzLgTmWuK8nTaE82dnz2J58nVzpd</td>
-                      <td>17:48:05 2019.09.12</td>
-                      <td>₿ 2.03 /<br/> $ 14,264.32</td>
-                    </tr>
-
-                    <tr>
-                      <td>12c43.  ..</td>
-                      <td>Received From</td>
-                      <td>16tDnuNzLgTmWuK8nTaE82dnz2J58nVzpd</td>
-                      <td>17:48:05 2019.09.12</td>
-                      <td>₿ 2.03 /<br/> $ 14,264.32</td>
-                    </tr>
 
                     {transactionItem}
                   </tbody>

@@ -107,10 +107,11 @@ class Transactions extends Component {
               <Form style={{width:"60%", margin:"1em auto"}}>
                 <Form.Group className="formTemplate" controlId="exampleForm.ControlSelect3">
                   <Form.Group controlId="formSendTransaction">
-                    <Form.Control type="text" placeholder="Send to address"/>
+                    <Form.Control type="text" placeholder="Send to address / Wallet ID"/>
                   </Form.Group>
 
                   <Form.Group controlId="formSendBtc" className="formSendBtc">
+                    <Form.Label>Value (BTC)</Form.Label>
                     <Form.Control
                       type="number"
                       name="sendBtc"
@@ -118,10 +119,10 @@ class Transactions extends Component {
                       onChange={this.onChange}
                       value={this.state.sendBtc}
                       />
-                      {console.log(this.state.sendBtc)}
                   </Form.Group>
 
                   <Form.Group controlId="formSendUsd">
+                    <Form.Label>Value (USD)</Form.Label>
                     <Form.Control
                       type="number"
                       placeholder="Value (USD)"
