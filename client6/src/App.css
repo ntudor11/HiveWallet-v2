@@ -229,6 +229,7 @@ input[type=number] {
 .transactionsTable {
   max-width:100%;
   margin-bottom:1em;
+  font-size: 12pt;
 }
 
 .transactionsTable tbody tr:nth-child(even) {

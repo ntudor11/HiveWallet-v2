@@ -78,5 +78,5 @@ INSERT INTO transactions (
 ) values (
   2,
   3,
-  1.2374
+  0.5
 );

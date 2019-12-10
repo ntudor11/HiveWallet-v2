@@ -17,15 +17,63 @@ class Transactions extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      wallet_name: '',
+      public_key: '',
+      balance_btc: '',
+      reg_date: '',
+      sendBtc: '',
+      transaction_time: '',
+      transactions: [],
+      btc_data: {},
       checked: false
     }
     this.handleChange = this.handleChange.bind(this);
+    this.onChange = this.onChange.bind(this)
+  }
+
+  onChange(e) {
+    this.setState({[e.target.name]: e.target.value})
   }
 
   handleChange(checked) {
     this.setState({ checked });
   }
 
+  componentDidMount() {
+    const token = localStorage.usertoken
+    const decoded = jwt_decode(token)
+    this.setState({
+      wallet_name: decoded.wallet_name,
+      public_key: decoded.public_key,
+      balance_btc: decoded.balance_btc,
+      reg_date: decoded.reg_date
+    }, () => {
+      fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          btc_data: json
+          // data.labels:
+        });
+      });
+    })
+  }
+
+  getLatestBtc() { // returns the oldest value
+    var lastProp;
+    for (var key in this.state.btc_data.bpi) {
+      if(this.state.btc_data.bpi.hasOwnProperty(key)) {
+        lastProp = this.state.btc_data.bpi[key];
+        // console.log(key+ " " + firstProp);
+      }
+    }
+    return lastProp;
+  }
+
+  btcToUsd() {
+    // const convertToUsd = (priceCharts.getLatestBtc() * this.state.balance_btc);
+    return (this.getLatestBtc() * this.state.sendBtc);
+  }
 
   render() {
     return (
@@ -63,11 +111,23 @@ class Transactions extends Component {
                   </Form.Group>
 
                   <Form.Group controlId="formSendBtc" className="formSendBtc">
-                    <Form.Control type="number" placeholder="Value (BTC)"/>
+                    <Form.Control
+                      type="number"
+                      name="sendBtc"
+                      placeholder="Value (BTC)"
+                      onChange={this.onChange}
+                      value={this.state.sendBtc}
+                      />
+                      {console.log(this.state.sendBtc)}
                   </Form.Group>
 
                   <Form.Group controlId="formSendUsd">
-                    <Form.Control type="number" placeholder="Value (USD)"/>
+                    <Form.Control
+                      type="number"
+                      placeholder="Value (USD)"
+                      onChange ={this.onChange}
+                      value={this.btcToUsd()}
+                      />
                   </Form.Group>
 
                     <Row className="colsButtons">

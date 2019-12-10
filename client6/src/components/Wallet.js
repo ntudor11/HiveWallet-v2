@@ -59,7 +59,7 @@ class Wallet extends Component {
 
   ageCalculator() {
     var currentDate = new Date().getTime() / 1000; // UNIX time
-    // var demoReg = new Date('Mar 28 2018 16:20:00').getTime() / 1000;
+    // var demoReg = new Date('Dec 08 2019 14:00:00').getTime() / 1000;
     var regDate = new Date(this.state.reg_date).getTime() / 1000; // UNIX time
     var diff = (currentDate - regDate);
     if (diff <= 3600) {
@@ -67,7 +67,11 @@ class Wallet extends Component {
     } else if (diff <= 84600) {
       return (diff / 3600).toFixed(2) + " hours"
     } else if (diff <= 604800) {
-      return (diff / 84600).toFixed(2) + " days"
+      if (diff >= 84600 && diff <= 172800) {
+        return (diff / 84600).toFixed(0) + " day"
+      } else {
+        return (diff / 84600).toFixed(0) + " days"
+      }
     } else if (diff <= 2629743.83) {
       return (diff / 604800).toFixed(2) + " weeks"
     } else if (diff <= 31556926) {
@@ -75,17 +79,6 @@ class Wallet extends Component {
     } else {
       return (diff / 31556926).toFixed(2) + " years"
     }
-  }
-
-  getLatestBtc() { // returns the oldest value
-    var lastProp;
-    for (var key in this.state.data.bpi) {
-      if(this.state.data.bpi.hasOwnProperty(key)) {
-        lastProp = this.state.data.bpi[key];
-        // console.log(key+ " " + firstProp);
-      }
-    }
-    return lastProp;
   }
 
   getLatestBtc() { // returns the oldest value
