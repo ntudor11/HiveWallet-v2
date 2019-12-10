@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Switch from "react-switch";
 import {NavLink } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import jwt_decode from 'jwt-decode';
 
 var qr = require('qr-encode');
 var publicAddress = "13xqbGCStztjRsEAZHbMAw82SRdQvyUT1t";

@@ -18,8 +18,37 @@ class Wallet extends Component {
       reg_date: '',
       transaction_time: '',
       transactions: [],
+      btc_data: {}
     }
   }
+
+  // componentDidMount() {
+  //   const token = localStorage.usertoken
+  //   const decoded = jwt_decode(token)
+  //   this.setState({
+  //     wallet_name: decoded.wallet_name,
+  //     public_key: decoded.public_key,
+  //     balance_btc: decoded.balance_btc,
+  //     reg_date: decoded.reg_date,
+  //     transaction_time: decoded.transaction_time
+  //   }, () => {
+  //     let self = this;
+  //     fetch('http://localhost:5000/wallets/walletslist', {
+  //         method: 'GET'
+  //     }).then(function(response) {
+  //         if (response.status >= 400) {
+  //             throw new Error("Bad response from server");
+  //         }
+  //         return response.json();
+  //     }).then(function(data) {
+  //         self.setState({transactions: data});
+  //     }).catch(err => {
+  //     console.log('caught it!',err);
+  //     })
+  //     console.log("should work");
+  //     console.log(this.state.wallet_name);
+  //   })
+  // }
 
   componentDidMount() {
     const token = localStorage.usertoken
@@ -44,9 +73,57 @@ class Wallet extends Component {
       }).catch(err => {
       console.log('caught it!',err);
       })
+      fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
+      .then(data => data.json())
+      .then(data => {
+        this.setState({
+          btc_data: data
+        })
+      })
       console.log("should work");
       console.log(this.state.wallet_name);
     })
+  }
+
+  // tryFetch() {
+  //   fetch(person(this.state.person))
+  //   .then(response => {
+  //     if(!response.ok) {
+  //       throw Error("Network Request Failed");
+  //     }
+  //     return response
+  //   })
+  //   .then(d => d.json())
+  //   .then(d => {
+  //     this.setState({
+  //       cardData: d
+  //     })
+  //
+  //     fetch(`http://localhost:3008/planets/${d.homeworld}`)
+  //       .then(data => data.json())
+  //       .then(data => {
+  //         this.setState({
+  //           homeData: data
+  //         })
+  //       })
+  //   }, () => {
+  //     this.setState({
+  //       requestFailed: true
+  //     })
+  //   })
+  // }
+
+  getData() {
+    let firstAPICall = fetch("http://localhost:5000/wallets/walletslist");
+    let secondAPICall = fetch("https://api.coindesk.com/v1/bpi/historical/close.json");
+
+    Promise.all([firstAPICall, secondAPICall])
+    .then(values => Promise.all(values.map(value => value.json())))
+    .then(finalVals => {
+      let firstAPIResp = finalVals[0];
+      let secondAPIResp = finalVals[1];
+    });
+    return [firstAPICall, secondAPICall];
   }
 
   ageCalculator() {
@@ -70,6 +147,10 @@ class Wallet extends Component {
   }
 
   render() {
+    const { btc_data } = this.state;
+    console.log(btc_data.bpi);
+    console.log(this.state.transactions);
+    // console.log(this.getData());
     return (
       <Container fluid className="h-100">
         <Row>
