@@ -10,6 +10,16 @@ import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
 
 class SignUpFifth extends Component {
+  /* eslint-disable */
+  continue = e => {
+    e.preventDefault;
+    this.props.nextStep();
+  }
+
+  back = e => {
+    e.preventDefault;
+    this.props.prevStep();
+  }
 
   constructor(props) {
     super(props)
@@ -68,13 +78,17 @@ class SignUpFifth extends Component {
 
                     <Row className="colsButtons">
                       <Col sm={6}>
-                        <NavLink exact to="/signup-fourth">
-                          <Button block variant="outline-primary">Back</Button>
-                        </NavLink>
+                        <Button block
+                          variant="primary"
+                          onClick={this.back}>Next
+                        </Button>
                       </Col>
 
-                      <Col sm={6}> {/* TODO Remove following navlink*/}
-                          <Button type="submit" block variant="primary">Next</Button>
+                      <Col sm={6}>
+                        <Button block
+                          variant="primary"
+                          onClick={this.continue}>Next
+                        </Button>
                       </Col>
                     </Row>
                   </Form.Group>

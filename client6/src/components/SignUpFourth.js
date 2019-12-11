@@ -9,9 +9,18 @@ import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
 
-
-
 class SignUpFourth extends Component {
+
+  /* eslint-disable */
+  continue = e => {
+    e.preventDefault;
+    this.props.nextStep();
+  }
+
+  back = e => {
+    e.preventDefault;
+    this.props.prevStep();
+  }
 
   constructor() {
     super()
@@ -72,15 +81,17 @@ class SignUpFourth extends Component {
 
                     <Row className="colsButtons">
                       <Col sm={6}>
-                        <NavLink exact to="/signup-third">
-                          <Button block variant="outline-primary">Back</Button>
-                        </NavLink>
+                        <Button block
+                          variant="primary"
+                          onClick={this.back}>Next
+                        </Button>
                       </Col>
 
-                      <Col sm={6}> {/* TODO Remove following navlink*/}
-                        <NavLink exact to="/signup-fifth">
-                          <Button type="submit" block variant="primary">Next</Button>
-                        </NavLink>
+                      <Col sm={6}>
+                        <Button block
+                          variant="primary"
+                          onClick={this.continue}>Next
+                        </Button>
                       </Col>
                     </Row>
                   </Form.Group>

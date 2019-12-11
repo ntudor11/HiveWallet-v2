@@ -14,6 +14,16 @@ var secretKey = "jrkdi+e+H9n0FGrw*ky"
 var dataURI = qr(secretKey, {type: 6, size: 6, level: 'M'});
 
 class SignUpSixth extends Component {
+  /* eslint-disable */
+  continue = e => {
+    e.preventDefault;
+    this.props.nextStep();
+  }
+
+  back = e => {
+    e.preventDefault;
+    this.props.prevStep();
+  }
 
   constructor() {
     super()
@@ -85,15 +95,17 @@ class SignUpSixth extends Component {
               <Col sm={6} lg={4}>
               <Row className="">
                 <Col sm={6}>
-                  <NavLink exact to="/signup-second">
-                    <Button block variant="outline-primary">Back</Button>
-                  </NavLink>
+                  <Button block
+                    variant="primary"
+                    onClick={this.back}>Next
+                  </Button>
                 </Col>
 
-                <Col sm={6}> {/* TODO Remove following navlink*/}
-                  <NavLink exact to="/dashboard">
-                    <Button type="submit" block variant="primary">Complete</Button>
-                  </NavLink>
+                <Col sm={6}>
+                  <Button block
+                    variant="primary"
+                    onClick={this.continue}>Next
+                  </Button>
                 </Col>
               </Row>
               </Col>

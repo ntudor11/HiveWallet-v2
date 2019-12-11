@@ -70,7 +70,32 @@ class SignupForm extends Component {
           />
         )
       case 4:
-        return <h1>Success</h1>
+        return (
+          <SignUpFourth
+            nextStep = {this.nextStep}
+            prevStep = {this.prevStep}
+            handleChange = {this.handleChange}
+            values = {values}
+          />
+        )
+      case 5:
+        return (
+          <SignUpFifth
+            nextStep = {this.nextStep}
+            prevStep = {this.prevStep}
+            handleChange = {this.handleChange}
+            values = {values}
+          />
+        )
+      case 6:
+        return (
+          <SignUpSixth
+            nextStep = {this.nextStep}
+            prevStep = {this.prevStep}
+            handleChange = {this.handleChange}
+            values = {values}
+          />
+        )
     }
   }
 }
