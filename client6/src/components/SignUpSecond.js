@@ -10,6 +10,16 @@ import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
 
 class SignUpSecond extends Component {
+  /* eslint-disable */
+  continue = e => {
+    e.preventDefault;
+    this.props.nextStep();
+  }
+
+  back = e => {
+    e.preventDefault;
+    this.props.prevStep();
+  }
 
   constructor() {
     super()
@@ -62,24 +72,21 @@ class SignUpSecond extends Component {
                   </Row>
                 </Alert>
 
-                <Form noValidate onSubmit={this.onSubmit}>
-                  <Form.Group className="formTemplate" controlId="formNewWallet">
+                <Row className="colsButtons">
+                  <Col sm={6}>
+                    <Button block
+                      variant="primary"
+                      onClick={this.back}>Next
+                    </Button>
+                  </Col>
 
-                    <Row className="colsButtons">
-                      <Col sm={6}>
-                        <NavLink exact to="/signup-first">
-                          <Button block variant="outline-primary">Back</Button>
-                        </NavLink>
-                      </Col>
-
-                      <Col sm={6}> {/* TODO Remove following navlink*/}
-                        <NavLink exact to="/signup-third">
-                          <Button type="submit" block variant="primary">Next</Button>
-                        </NavLink>
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Form>
+                  <Col sm={6}>
+                    <Button block
+                      variant="primary"
+                      onClick={this.continue}>Next
+                    </Button>
+                  </Col>
+                </Row>
               </Col>
               <Col sm={3} lg={4}></Col>
             </Row>

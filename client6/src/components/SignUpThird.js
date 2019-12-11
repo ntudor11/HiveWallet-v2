@@ -17,6 +17,17 @@ var dataURI = qr(seedPhrase, {type: 6, size: 6, level: 'M'});
 
 class SignUpThird extends Component {
 
+  /* eslint-disable */
+  continue = e => {
+    e.preventDefault;
+    this.props.nextStep();
+  }
+
+  back = e => {
+    e.preventDefault;
+    this.props.prevStep();
+  }
+
   constructor() {
     super()
     this.state = {
@@ -62,7 +73,7 @@ class SignUpThird extends Component {
 
                     <Col sm={10}>
                       <Alert.Heading className="alertHeading" >Your Seed Phrase</Alert.Heading>
-                      <p>Find below your wallet generation seed. Please save these 12 words in a safe place or download the corresponding QR code (the word’s order is important). This seed will allow you to recover your wallet, in case of a failure or a lost password. You will it need for backup and recovery purposes, so please make sure you do not lose it!</p>
+                      <p>Find below your wallet generation seed. Please save these 12 words in a safe place or download the corresponding QR code (the word’s order is important). This seed will allow you to recover your wallet, in case of a failure or a lost password. You will it need for backup and recovery purposes, so make sure you do not lose it!</p>
                       <div style={{margin:"0 auto", width:"100px"}}>
                         <img src={doge} alt="doge-meme" style={{width:"100px", textAlign:"center"}}/>
                       </div>
@@ -89,15 +100,17 @@ class SignUpThird extends Component {
               <Col sm={6} lg={4}>
               <Row className="">
                 <Col sm={6}>
-                  <NavLink exact to="/signup-second">
-                    <Button block variant="outline-primary">Back</Button>
-                  </NavLink>
+                  <Button block
+                    variant="primary"
+                    onClick={this.back}>Next
+                  </Button>
                 </Col>
 
-                <Col sm={6}> {/* TODO Remove following navlink*/}
-                  <NavLink exact to="/signup-fourth">
-                    <Button type="submit" block variant="primary">Next</Button>
-                  </NavLink>
+                <Col sm={6}>
+                  <Button block
+                    variant="primary"
+                    onClick={this.continue}>Next
+                  </Button>
                 </Col>
               </Row>
               </Col>

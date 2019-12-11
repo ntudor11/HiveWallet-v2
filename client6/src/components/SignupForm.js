@@ -11,6 +11,7 @@ class SignupForm extends Component {
     step: 1,
     id:'',
     wallet_name: '',
+    seed_phrase: '',
     password: '',
     public_key: '',
     balance_btc: '',
@@ -40,8 +41,8 @@ class SignupForm extends Component {
 
   render() {
     const { step } = this.state;
-    const { id, wallet_name, password, public_key, balance_btc, reg_date } = this.state;
-    const values = { id, wallet_name, password, public_key, balance_btc, reg_date };
+    const { id, wallet_name, seed_phrase, password, public_key, balance_btc, reg_date } = this.state;
+    const values = { id, wallet_name, seed_phrase, password, public_key, balance_btc, reg_date };
 
     switch(step) {
       case 1:
@@ -53,9 +54,21 @@ class SignupForm extends Component {
           />
         )
       case 2:
-        return <h1>Sign up Second</h1>
+        return (
+          <SignUpSecond
+            nextStep = {this.nextStep}
+            prevStep = {this.prevStep}
+          />
+        )
       case 3:
-        return <h1>Confirm</h1>
+        return (
+          <SignUpThird
+            nextStep = {this.nextStep}
+            prevStep = {this.prevStep}
+            handleChange = {this.handleChange}
+            values = {values}
+          />
+        )
       case 4:
         return <h1>Success</h1>
     }
