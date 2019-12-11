@@ -10,8 +10,6 @@ import Navbar from '../components/Navbar';
 import jwt_decode from 'jwt-decode';
 
 var qr = require('qr-encode');
-var publicAddress = "13xqbGCStztjRsEAZHbMAw82SRdQvyUT1t";
-var dataURI = qr(publicAddress, {type: 6, size: 6, level: 'M'});
 
 class Transactions extends Component {
   constructor(props) {
@@ -57,6 +55,11 @@ class Transactions extends Component {
         });
       });
     })
+  }
+
+  viewPublicKey() {
+    var dataURI = qr(this.state.public_key, {type: 6, size: 6, level: 'M'});
+    return dataURI;
   }
 
   getLatestBtc() { // returns the oldest value
@@ -144,13 +147,13 @@ class Transactions extends Component {
               </div>
                  :
               <div className="transactionReceive">
-                <p style={{fontFamily:"josefinSansRegular"}}>Your BTC Address:</p>
-                <img src={dataURI} alt="qrcode-wallet-address" style={{width:"200px", border:"10px solid white"}}/>
+                <p style={{fontFamily:"josefinSansRegular"}}>Your Public Key:</p>
+                <img src={this.viewPublicKey()} alt="qrcode-wallet-address" style={{width:"200px", border:"10px solid white"}}/>
                 <Form style={{width:"60%", margin:"1em auto"}}>
                   <Form.Group className="formTemplate" controlId="exampleForm.ControlSelect4">
 
                     <Form.Group controlId="formBtcAddress">
-                      <Form.Control type="text" placeholder="13xqbGCStztjRsEAZHbMAw82SRdQvyUT1t"defaultValue={publicAddress} readOnly/>
+                      <Form.Control type="text" placeholder="" defaultValue={this.state.public_key} readOnly/>
                     </Form.Group>
                 </Form.Group>
               </Form>

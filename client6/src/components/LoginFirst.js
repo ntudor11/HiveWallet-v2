@@ -70,7 +70,7 @@ class LoginFirst extends Component {
 
                     <Col sm={10}>
                       <Alert.Heading className="alertHeading" >Authentication method</Alert.Heading>
-                      <p>Choose your wallet from the list to the left and input the corresponding password or the seed phrase, in case you have lost your password.</p>
+                      <p>Choose your wallet from the list to the left and input the corresponding password.</p>
                     </Col>
                   </Row>
                 </Alert>

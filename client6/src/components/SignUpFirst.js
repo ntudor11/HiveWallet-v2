@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
+import {register} from './UserFunctions'
 var CoinKey = require('coinkey');
 
 class SignUpFirst extends Component {
@@ -20,8 +21,8 @@ class SignUpFirst extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      walletName: '',
-      publicAddress: ''
+      wallet_name: '',
+      public_key: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,23 +31,33 @@ class SignUpFirst extends Component {
 
   handleChange(event) {
     this.setState({
-      walletName: event.target.value});
+      wallet_name: event.target.value});
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.walletName.length <= 3) {
+    if (this.state.wallet_name.length <= 3) {
       console.log("The wallet name needs to have a minimum of 4 characters!");
       alert(`The wallet name needs to have a minimum of 4 characters!`);
     } else {
       var ck = new CoinKey.createRandom();
 
-      document.location.href = "/signup-second";
-      alert(`Your new wallet name is: ${this.state.walletName} and its public address is ` + ck.publicAddress);
-      console.log(`New Wallet Name: ${this.state.walletName}`);
+      console.log(`New Wallet Name: ${this.state.wallet_name}`);
       console.log("Private Key (Wallet Import Format): " + ck.privateWif);
       console.log("Private Key (Hex): " + ck.privateKey.toString('hex'));
       console.log("Public Address: " + ck.publicAddress);
+
+      const wallet = {
+        wallet_name: this.state.wallet_name,
+        password: "123",
+        public_key: ck.publicAddress,
+        balance_btc: 0
+      }
+
+      register(wallet).then(res => {
+        alert(`Your new wallet name is: ${this.state.wallet_name} and its public address is ` + ck.publicAddress);
+        document.location.href = "/login-first";
+      })
     }
   }
 
@@ -81,7 +92,7 @@ class SignUpFirst extends Component {
                 <Form noValidate onSubmit={this.handleSubmit}>
                   <Form.Group className="formTemplate" controlId="formNewWallet">
 
-                    <Form.Control type="text" value={this.state.walletName} placeholder="Enter Wallet Name" onChange={this.handleChange} />
+                    <Form.Control type="text" value={this.state.wallet_name} placeholder="Enter Wallet Name" onChange={this.handleChange} />
 
                     <Row className="colsButtons">
                       <Col sm={6}>

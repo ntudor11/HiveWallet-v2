@@ -6,14 +6,14 @@ import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
+import doge from '../images/doge.png';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
 
 const dogeSeed = require('doge-seed');
 var qr = require('qr-encode');
-var seedPhrase = "church heal bark extinct facility enjoy convict duty goat chocolate slip shadow"
-var seedPhrase2 = dogeSeed();
-var dataURI = qr(seedPhrase2, {type: 6, size: 6, level: 'M'});
+var seedPhrase = dogeSeed();
+var dataURI = qr(seedPhrase, {type: 6, size: 6, level: 'M'});
 
 class SignUpThird extends Component {
 
@@ -54,7 +54,7 @@ class SignUpThird extends Component {
             <Row>
               <Col sm={3} lg={4}></Col>
               <Col sm={6} lg={4}>
-                <Alert variant="info">
+                <Alert variant="warning">
                   <Row>
                     <Col className="d-flex align-items-center" sm={2}>
                       <img className="infoIcon" src={InfoWhite} alt="info"/>
@@ -62,7 +62,10 @@ class SignUpThird extends Component {
 
                     <Col sm={10}>
                       <Alert.Heading className="alertHeading" >Your Seed Phrase</Alert.Heading>
-                      <p>Find below your wallet generation seed. Please save these 12 words in a safe place or download the corresponding QR code (the word’s order is important). This seed will allow you to recover your wallet, in case of a failure or a lost password. You will it need for backup and recovery purposes.</p>
+                      <p>Find below your wallet generation seed. Please save these 12 words in a safe place or download the corresponding QR code (the word’s order is important). This seed will allow you to recover your wallet, in case of a failure or a lost password. You will it need for backup and recovery purposes, so please make sure you do not lose it!</p>
+                      <div style={{margin:"0 auto", width:"100px"}}>
+                        <img src={doge} alt="doge-meme" style={{width:"100px", textAlign:"center"}}/>
+                      </div>
                     </Col>
                   </Row>
                 </Alert>
@@ -73,7 +76,7 @@ class SignUpThird extends Component {
                   <Col sm={8}>
                     <Form noValidate onSubmit={this.onSubmit}>
                       <Form.Group className="formTemplate" controlId="formGetSeed">
-                        <Form.Control as="textarea" rows="3" readOnly defaultValue={seedPhrase2} />
+                        <Form.Control as="textarea" rows="4" readOnly defaultValue={seedPhrase} />
                       </Form.Group>
                     </Form>
                   </Col>
@@ -81,7 +84,7 @@ class SignUpThird extends Component {
               </Col>
               <Col sm={3} lg={4}></Col>
             </Row>
-            <Row className="colsButtons">
+            <Row className="colsButtons" style={{marginBottom:"1em"}}>
               <Col sm={3} lg={4}></Col>
               <Col sm={6} lg={4}>
               <Row className="">
