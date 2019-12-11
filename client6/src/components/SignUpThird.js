@@ -9,9 +9,11 @@ import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
 
+const dogeSeed = require('doge-seed');
 var qr = require('qr-encode');
 var seedPhrase = "church heal bark extinct facility enjoy convict duty goat chocolate slip shadow"
-var dataURI = qr(seedPhrase, {type: 6, size: 6, level: 'M'});
+var seedPhrase2 = dogeSeed();
+var dataURI = qr(seedPhrase2, {type: 6, size: 6, level: 'M'});
 
 class SignUpThird extends Component {
 
@@ -71,7 +73,7 @@ class SignUpThird extends Component {
                   <Col sm={8}>
                     <Form noValidate onSubmit={this.onSubmit}>
                       <Form.Group className="formTemplate" controlId="formGetSeed">
-                        <Form.Control as="textarea" rows="3" readOnly defaultValue={seedPhrase} />
+                        <Form.Control as="textarea" rows="3" readOnly defaultValue={seedPhrase2} />
                       </Form.Group>
                     </Form>
                   </Col>

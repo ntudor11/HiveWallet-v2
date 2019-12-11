@@ -10,6 +10,7 @@ import Settings from './components/Settings';
 import LogSignIn from './components/LogSignIn';
 import LoginFirst from './components/LoginFirst';
 import LoginSecond from './components/LoginSecond';
+import SignupForm from './components/SignupForm';
 import SignUpFirst from './components/SignUpFirst';
 import SignUpSecond from './components/SignUpSecond';
 import SignUpThird from './components/SignUpThird';
@@ -25,6 +26,7 @@ class App extends Component {
         <div className="App">
             <Switch>
               <Route exact path="/" component={LogSignIn}/>
+              <Route exact path="/signup-form" component={SignupForm}/>
               <Route exact path="/signup-first" component={SignUpFirst}/>
               <Route exact path="/signup-second" component={SignUpSecond}/>
               <Route exact path="/signup-third" component={SignUpThird}/>

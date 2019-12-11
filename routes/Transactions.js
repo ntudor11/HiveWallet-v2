@@ -35,7 +35,7 @@ transactions.get('/joined_transactions', function(req, res, next) {
 // show JSON list of MY TRANSACTIONS only
 transactions.get('/my_transactions', function(req, res, next) {
     Transaction.findAll({
-      where: {'wallet_name': 'test_wallet'},
+      where: {'wallet_name': 'testing'},
       // include: User.loggeduser,
       attributes: ['id', 'sender_id', 'receiver_id', 'amount_btc', 'transaction_time']
     })

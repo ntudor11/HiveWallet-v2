@@ -24,7 +24,7 @@ class LogSignIn extends Component {
                   <Button block variant="primary">Log In to Existing Wallet</Button>
                 </NavLink>
 
-                <NavLink exact to="/signup-first">
+                <NavLink exact to="/signup-form">
                   <Button block variant="outline-primary">Create New Wallet</Button>
                 </NavLink>
 

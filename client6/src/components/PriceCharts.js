@@ -82,6 +82,43 @@ class PriceCharts extends Component {
     })
   }
 
+  getChartData() {
+    var testData = {
+      labels: [],
+      datasets: [
+        {
+          label: "Value (USD)",
+          data: [],
+          backgroundColor:[
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(255, 99, 132, 0.6)'
+          ]
+        }
+      ]
+    };
+    // for (var key in this.state.data.bpi) {
+    //   var value = this.state.data.bpi[key];
+    //   testData.datasets.data = value;
+    // }
+    // testData.datasets.data = [this.state.bpi];
+    for (var key in this.state.data.bpi) {
+      var value = this.state.data.bpi[key];
+      testData.labels.push(key);
+      // for (var i = 0; i <= 31; i++) {
+      testData.datasets[0].data[key] = value;
+      // }
+    }
+    console.log(typeof testData.datasets[0].data);
+    console.log(testData);
+    console.log(this.state.chartData);
+    return testData;
+  }
+
   getLatestBtc() { // returns the oldest value
     var lastProp;
     for (var key in this.state.data.bpi) {
@@ -97,6 +134,7 @@ class PriceCharts extends Component {
     const { data } = this.state;
     console.log(data);
 
+    this.getChartData();
     this.getLatestBtc();
 
     return (

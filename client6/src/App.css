@@ -34,10 +34,11 @@ h1, h2, h3 {
 
 .sideMenu {
   background-color: rgba(54,61,83,.8);
+  /* position: fixed; */
 }
 
 .content {
-
+  /* margin-left: 250px; */
 }
 
 .sideMenu, .content {

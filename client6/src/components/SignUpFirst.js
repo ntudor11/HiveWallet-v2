@@ -12,6 +12,11 @@ var CoinKey = require('coinkey');
 
 class SignUpFirst extends Component {
 
+  // continue = e => {
+  //   e.preventDefault;
+  //   this.props.nextStep();
+  // }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -29,19 +34,24 @@ class SignUpFirst extends Component {
   }
 
   handleSubmit(event) {
-    // if (this.state.walletName.length !== 0) console.log("true");
-    var ck = new CoinKey.createRandom();
-
-    document.location.href = "/signup-second";
-    alert(`Your new wallet name is: ${this.state.walletName} and its public address is ` + ck.publicAddress);
-    console.log(`New Wallet Name: ${this.state.walletName}`);
-    console.log("Private Key (Wallet Import Format): " + ck.privateWif);
-    console.log("Private Key (Hex): " + ck.privateKey.toString('hex'));
-    console.log("Public Address: " + ck.publicAddress);
     event.preventDefault();
+    if (this.state.walletName.length <= 3) {
+      console.log("The wallet name needs to have a minimum of 4 characters!");
+      alert(`The wallet name needs to have a minimum of 4 characters!`);
+    } else {
+      var ck = new CoinKey.createRandom();
+
+      document.location.href = "/signup-second";
+      alert(`Your new wallet name is: ${this.state.walletName} and its public address is ` + ck.publicAddress);
+      console.log(`New Wallet Name: ${this.state.walletName}`);
+      console.log("Private Key (Wallet Import Format): " + ck.privateWif);
+      console.log("Private Key (Hex): " + ck.privateKey.toString('hex'));
+      console.log("Public Address: " + ck.publicAddress);
+    }
   }
 
   render() {
+    const { values, handleChange } = this.props;
 
     return (
       <Container fluid className="h-100">
@@ -80,10 +90,8 @@ class SignUpFirst extends Component {
                         </NavLink>
                       </Col>
 
-                      <Col sm={6}> {/* TODO Remove following navlink*/}
-
+                      <Col sm={6}>
                         <Button type="submit" block variant="primary">Next</Button>
-
                       </Col>
                     </Row>
                   </Form.Group>

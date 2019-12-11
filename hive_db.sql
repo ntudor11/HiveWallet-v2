@@ -21,62 +21,121 @@ CREATE TABLE transactions (
   transaction_time timestamp not null default current_timestamp
 );
 
-UPDATE wallets
-  SET balance_btc = 1
-  WHERE id = 2;
-
-INSERT INTO transactions (
-  sender_id,
-  receiver_id,
-  amount_btc
-) values (
-  3,
+INSERT INTO wallets (
+  id,
+  wallet_name,
+  password,
+  public_key,
+  balance_btc,
+  reg_date
+) VALUES (
   2,
-  1
+  'test',
+  '$2b$10$69ntuTVdu8BN6UqZoUInae6yhAJOsN2jRtzi3UtcYWEjwn0OgjFWm',
+  '',
+  0,
+  NOW()
 );
 
-update wallets w
-  set balance_btc = (
-    select sum(amount_btc)
-    from transactions t
-    where t.receiver_id = w.id);
+INSERT INTO wallets (
+  id,
+  wallet_name,
+  password,
+  public_key,
+  balance_btc,
+  reg_date
+) VALUES (
+  3,
+  'testing',
+  '$2b$10$tHp4ASgNJKqDfW0OTd7pfeNQtgcUDFfEAgj75WHEAUcLxZNtfiBuG',
+  '',
+  5,
+  NOW()
+);
 
-update wallets w
-  set balance_btc = (
-    select -(amount_btc)
-    from transactions t
-    where t.sender_id = w.id);
+  -- transaction that updates both tables at once
+  START TRANSACTION;
 
-update wallets w
-  set balance_btc = (case
-    when t.receiver_id = w.id
-      then select amount_btc
-    when t.sender_id = w.id
-      then select -(amount_btc)
-    from transactions t
-    where t.receiver_id = w.id);
-
-update wallets w inner join transactions t
-  on w.id = t.receiver_id or w.id = t.sender_id
-  set w.balance_btc = (case
-    when w.id = t.receiver_id
-      then w.balance_btc = sum(t.amount_btc)
-    when w.id = t.sender_id
-      then w.balance_btc = -sum(t.amount_btc)
+  INSERT INTO transactions (
+    sender_id,
+    receiver_id,
+    amount_btc
+  ) values (
+    3,
+    2,
+    1
   );
 
-  balance_btc = case when w.id = t.receiver_id
-    then select t.amount_btc end,
-  balance_btc = case when w.id = t.sender_id
-    then select -(amount_btc) end
-    where transactions t.receiver_id = w.id;
+  update wallets, transactions
+    set
+      wallets.balance_btc = (
+        select (sum(wallets.balance_btc) - sum(transactions.amount_btc))
+        from transactions
+        where transactions.sender_id = wallets.id
+      ),
+      wallets.balance_btc = (
+        select (sum(wallets.balance_btc) + max(transactions.amount_btc))
+        from transactions
+        where transactions.receiver_id = wallets.id
+      ); -- if I execute only one of these SET statements, that one retrieves the correct result while it updates the other value with NULL. If I execute both, both the values will be NULL.
 
-INSERT INTO transactions (
-  sender_id,
-  receiver_id,
-  amount_btc
-) values (
-  2,
-  3,
-  0.5
-);
+  COMMIT;
+
+-- INSERT INTO transactions (
+--   sender_id,
+--   receiver_id,
+--   amount_btc
+-- ) values (
+--   3,
+--   2,
+--   1
+-- );
+--
+-- update wallets w
+--   set balance_btc = (
+--     select (sum(w.balance_btc) + sum(t.amount_btc))
+--     from transactions t
+--     where t.receiver_id = w.id);
+--
+-- update wallets w
+--   set balance_btc = (
+--     select (w.balance_btc - sum(t.amount_btc))
+--     from transactions t
+--     where t.sender_id = w.id);
+
+
+
+
+-- update wallets w
+--   set balance_btc = (case
+--     when t.receiver_id = w.id
+--       then select amount_btc
+--     when t.sender_id = w.id
+--       then select -(amount_btc)
+--     from transactions t
+--     where t.receiver_id = w.id);
+--
+-- update wallets w inner join transactions t
+--   on w.id = t.receiver_id or w.id = t.sender_id
+--   set w.balance_btc = (case
+--     when w.id = t.receiver_id
+--       then w.balance_btc = sum(t.amount_btc)
+--     when w.id = t.sender_id
+--       then w.balance_btc = -sum(t.amount_btc)
+--   );
+--
+--   balance_btc = case when w.id = t.receiver_id
+--     then select t.amount_btc end,
+--   balance_btc = case when w.id = t.sender_id
+--     then select -(amount_btc) end
+--     where transactions t.receiver_id = w.id;
+--
+-- INSERT INTO transactions (
+--   sender_id,
+--   receiver_id,
+--   amount_btc
+-- ) values (
+--   2,
+--   3,
+--   0.5
+-- );
