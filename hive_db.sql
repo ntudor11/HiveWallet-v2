@@ -5,6 +5,7 @@ USE hive_wallet;
 CREATE TABLE wallets (
   id int not null auto_increment primary key,
   wallet_name varchar(100) not null,
+  get_seed varchar(400) not null,
   password varchar(255) not null,
   public_key varchar(400),
   balance_btc DOUBLE(10, 5),
@@ -24,6 +25,7 @@ CREATE TABLE transactions (
 INSERT INTO wallets (
   id,
   wallet_name,
+  get_seed,
   password,
   public_key,
   balance_btc,
@@ -31,6 +33,7 @@ INSERT INTO wallets (
 ) VALUES (
   2,
   'test',
+  'very pulse much wear transfer tired indoor lens allow open concert canoe',
   '$2b$10$69ntuTVdu8BN6UqZoUInae6yhAJOsN2jRtzi3UtcYWEjwn0OgjFWm',
   '',
   0,
@@ -40,6 +43,7 @@ INSERT INTO wallets (
 INSERT INTO wallets (
   id,
   wallet_name,
+  get_seed,
   password,
   public_key,
   balance_btc,
@@ -47,6 +51,7 @@ INSERT INTO wallets (
 ) VALUES (
   3,
   'testing',
+  'very indoor much lens transfer tired outside tired allow open close kaiak',
   '$2b$10$tHp4ASgNJKqDfW0OTd7pfeNQtgcUDFfEAgj75WHEAUcLxZNtfiBuG',
   '',
   5,

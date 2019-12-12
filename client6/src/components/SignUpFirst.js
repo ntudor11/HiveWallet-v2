@@ -22,49 +22,6 @@ class SignUpFirst extends Component {
     }
   }
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     wallet_name: '',
-  //     public_key: ''
-  //   };
-  //
-  //   this.handleChange = this.handleChange.bind(this);
-  //   this.handleSubmit = this.handleSubmit.bind(this);
-  // }
-  //
-  // handleChange(event) {
-  //   this.setState({
-  //     wallet_name: event.target.value});
-  // }
-  //
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   if (this.state.wallet_name.length <= 3) {
-  //     console.log("The wallet name needs to have a minimum of 4 characters!");
-  //     alert(`The wallet name needs to have a minimum of 4 characters!`);
-  //   } else {
-  //     var ck = new CoinKey.createRandom();
-  //
-  //     console.log(`New Wallet Name: ${this.state.wallet_name}`);
-  //     console.log("Private Key (Wallet Import Format): " + ck.privateWif);
-  //     console.log("Private Key (Hex): " + ck.privateKey.toString('hex'));
-  //     console.log("Public Address: " + ck.publicAddress);
-  //
-  //     const wallet = {
-  //       wallet_name: this.state.wallet_name,
-  //       password: "123",
-  //       public_key: ck.publicAddress,
-  //       balance_btc: 0
-  //     }
-  //
-  //     register(wallet).then(res => {
-  //       alert(`Your new wallet name is: ${this.state.wallet_name} and its public address is ` + ck.publicAddress);
-  //       document.location.href = "/login-first";
-  //     })
-  //   }
-  // }
-
   render() {
     const { values, handleChange } = this.props;
 

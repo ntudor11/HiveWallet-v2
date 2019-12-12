@@ -9,8 +9,6 @@ import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
 
-
-
 class LoginSecond extends Component {
 
   render() {
@@ -34,7 +32,7 @@ class LoginSecond extends Component {
 
                     <Col sm={10}>
                       <Alert.Heading className="alertHeading" >Two-Factor Authentication required</Alert.Heading>
-                      <p>Enter the six-digit code from your code-generator or third party app below.</p>
+                      <p>Enter the six-digit code from your code-generator or third party app below (NB: This is just a demo, so you can directly press on Log in).</p>
                     </Col>
                   </Row>
                 </Alert>

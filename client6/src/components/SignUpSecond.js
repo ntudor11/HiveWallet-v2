@@ -19,30 +19,6 @@ class SignUpSecond extends Component {
     this.props.prevStep();
   }
 
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     walletName: '',
-  //     password: ''
-  //   }
-  //
-  //   this.onChange = this.onChange.bind(this)
-  //   this.onSubmit = this.onSubmit.bind(this)
-  // }
-  //
-  // onChange(e) {
-  //   this.setState({[e.target.name]: e.target.value})
-  // }
-  //
-  // onSubmit(e) { //TODO make it work
-  //   e.preventDefault()
-  //
-  //   // const wallet = {
-  //   //   walletName: this.state.walletName,
-  //   //   password: this.state.password
-  //   // }
-  // }
-
   render() {
     return (
       <Container fluid className="h-100">

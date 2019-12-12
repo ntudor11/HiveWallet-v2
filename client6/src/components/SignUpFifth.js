@@ -33,28 +33,6 @@ class SignUpFifth extends Component {
     this.props.prevStep();
   }
 
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     password: '',
-  //   }
-  //
-  //   this.handleChange = this.handleChange.bind(this);
-  //   this.handleSubmit = this.handleSubmit.bind(this);
-  // }
-  //
-  // handleChange(event) {
-  //   this.setState({
-  //     password: event.target.value
-  //   });
-  // }
-  //
-  // handleSubmit(e) { //TODO make it work
-  //   alert(`Your password has been successfully set.`);
-  //   document.location.href = "/signup-sixth";
-  //   e.preventDefault();
-  // }
-
   render() {
     const { values, handleChange } = this.props;
 

@@ -16,6 +16,7 @@ wallets.post('/register', (req, res) => {
   const walletData = {
     id: req.body.id,
     wallet_name: req.body.wallet_name,
+    get_seed: req.body.get_seed,
     password: req.body.password,
     public_key: req.body.public_key,
     balance_btc: req.body.balance_btc,
@@ -31,13 +32,16 @@ wallets.post('/register', (req, res) => {
     if(!wallet) {
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         walletData.password = hash
-        Wallet.create(walletData)
-        .then(user => {
-          res.json({status: wallet.wallet_name + ' created'})
-          console.log(wallet.wallet_name + ' created')
-        })
-        .catch(err => {
-          res.send('error: ' + err)
+        bcrypt.hash(req.body.get_seed, 10, (err, hash) => {
+          walletData.get_seed = hash
+          Wallet.create(walletData)
+          .then(user => {
+            res.json({status: wallet.wallet_name + ' created'})
+            console.log(wallet.wallet_name + ' created')
+          })
+          .catch(err => {
+            res.send('error: ' + err)
+          })
         })
       })
     } else {

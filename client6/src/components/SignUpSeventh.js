@@ -8,15 +8,31 @@ import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import { AiOutlineEyeInvisible } from "react-icons/ai"
-// import {register} from './UserFunctions';
-// var CoinKey = require('coinkey');
+import {register} from './UserFunctions';
+var CoinKey = require('coinkey');
 
 class SignUpSeventh extends Component {
   /* eslint-disable */
   continue = e => {
     e.preventDefault;
     // PROCESS FORM HERE
-    this.props.nextStep();
+    var ck = new CoinKey.createRandom();
+    console.log("Private Key (Wallet Import Format): " + ck.privateWif);
+    console.log("Private Key (Hex): " + ck.privateKey.toString('hex'));
+    console.log("Public Address: " + ck.publicAddress);
+
+    const wallet = {
+      wallet_name: this.props.values.wallet_name,
+      get_seed: this.props.values.get_seed,
+      password: this.props.values.password,
+      public_key: ck.publicAddress,
+      balance_btc: 1 // for transactioning purposes
+    }
+
+    register(wallet).then(res => {
+      alert(`Your new wallet name is: ${this.props.values.wallet_name} and its public address is ` + ck.publicAddress);
+      document.location.href = "/login-first";
+    })
   }
 
   back = e => {
@@ -24,7 +40,7 @@ class SignUpSeventh extends Component {
     this.props.prevStep();
   }
 
-  toggle = e => {
+  togglePass = e => {
     e.preventDefault;
     let pass = document.getElementById("approvePass");
     if (pass.type === "password") {
@@ -34,27 +50,15 @@ class SignUpSeventh extends Component {
     }
   }
 
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     password: '',
-  //   }
-  //
-  //   this.handleChange = this.handleChange.bind(this);
-  //   this.handleSubmit = this.handleSubmit.bind(this);
-  // }
-  //
-  // handleChange(event) {
-  //   this.setState({
-  //     password: event.target.value
-  //   });
-  // }
-  //
-  // handleSubmit(e) { //TODO make it work
-  //   alert(`Your password has been successfully set.`);
-  //   document.location.href = "/signup-sixth";
-  //   e.preventDefault();
-  // }
+  toggleSeed = e => {
+    e.preventDefault;
+    let seed = document.getElementById("approveSeed");
+    if (seed.type === "password") {
+      seed.type = "text";
+    } else {
+      seed.type = "password";
+    }
+  }
 
   render() {
     const {
@@ -106,7 +110,7 @@ class SignUpSeventh extends Component {
                         />
                         <Button
                           id="togglePass"
-                          onClick={this.toggle}
+                          onClick={this.togglePass}
                         >
                           <AiOutlineEyeInvisible/>
                         </Button>
@@ -114,6 +118,32 @@ class SignUpSeventh extends Component {
                     </Form>
                   </Col>
                 </Row>
+
+                <Row>
+                  <Col sm={3}><p className="approveLabel">Seed Phrase:</p></Col>
+                  <Col sm={9}>
+                    <Form noValidate>
+                      <Form.Group className="formTemplate" controlId="formApprovePass" id="formApprovePass">
+                        <Form.Control
+                          style={{zIndex:86}}
+                          id = "approveSeed"
+                          type="password"
+                          placeholder="Seed Phrase"
+                          defaultValue={get_seed}
+                          readOnly
+                        />
+                        <Button
+                          style={{zIndex:99}}
+                          id="togglePass"
+                          onClick={this.toggleSeed}
+                        >
+                          <AiOutlineEyeInvisible/>
+                        </Button>
+                      </Form.Group>
+                    </Form>
+                  </Col>
+                </Row>
+
                 <Row className="colsButtons">
                   <Col sm={6}>
                     <Button block
