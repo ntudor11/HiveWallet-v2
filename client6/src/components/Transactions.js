@@ -143,10 +143,11 @@ class Transactions extends Component {
 
                     <Row className="colsButtons">
 
-                      <Col sm={12}> {/* TODO Remove following navlink*/}
+                      <Col sm={12} className="demoHolder"> {/* TODO Remove following navlink*/}
                           <Button
                           type="submit"
                           variant="primary">Send Payment</Button>
+                          <span class="tooltiptext">This feature is coming soon. </span>
                       </Col>
                     </Row>
               </Form.Group>

@@ -19,7 +19,7 @@ class LogSignIn extends Component {
             </Row>
             <Row className="colsButtons frontColsButtons">
               <Col sm={4}></Col>
-              <Col sm={4}>
+              <Col sm={4} className="frontNav">
                 <NavLink exact to="/login-first">
                   <Button block variant="primary">Log In to Existing Wallet</Button>
                 </NavLink>
@@ -28,7 +28,10 @@ class LogSignIn extends Component {
                   <Button block variant="outline-primary">Create New Wallet</Button>
                 </NavLink>
 
-                <Button block variant="outline-primary">Restore Wallet</Button>
+                <div className="demoHolder">
+                  <Button block variant="outline-primary">Restore Wallet</Button>
+                  <span class="tooltiptext">This feature is coming soon.</span>
+                </div>
               </Col>
               <Col sm={4}></Col>
             </Row>

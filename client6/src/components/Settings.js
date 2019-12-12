@@ -99,8 +99,9 @@ class Settings extends Component {
             <Row className="colsButtons">
               <Col sm={3} lg={4}></Col>
               <Col sm={6} lg={4}>
-                <NavLink exact to="/settings"> {/*TODO remove the navlink and update settings on button click?? */}
+                <NavLink exact to="/settings" className="demoHolder"> {/*TODO remove the navlink and update settings on button click?? */}
                   <Button block variant="primary">Save All</Button>
+                  <span class="tooltiptext">This feature is coming soon.</span>
                 </NavLink>
               </Col>
               <Col sm={3} lg={4}></Col>
