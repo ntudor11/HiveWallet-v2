@@ -13,7 +13,12 @@ class SignUpFourth extends Component {
   /* eslint-disable */
   continue = e => {
     e.preventDefault;
-    this.props.nextStep();
+    if (this.props.values.get_seed !== this.props.values.confirm_seed) {
+      console.log("Wrong seed, type again");
+      alert("The Seedphrase you introduces is wrong. Try again or press Back for viewing it again.");
+    } else {
+      this.props.nextStep();
+    }
   }
 
   back = e => {
@@ -46,7 +51,13 @@ class SignUpFourth extends Component {
   // }
 
   render() {
-    const { values, handleChange } = this.props;
+    // const { values, handleChange } = this.props;
+    const {
+      values: {
+        wallet_name, get_seed, confirm_seed
+      },
+      handleChange
+    } = this.props;
 
     return (
       <Container fluid className="h-100">
@@ -81,7 +92,7 @@ class SignUpFourth extends Component {
                         as="textarea"
                         placeholder="Enter Seed Phrase"
                         onChange={handleChange('confirm_seed')}
-                        defaultValue={values.confirm_seed}
+                        defaultValue={confirm_seed}
                       />
                     </Form.Group>
 

@@ -47,6 +47,7 @@ class SignupForm extends Component {
     const { id, wallet_name, get_seed, confirm_seed, password, confirm_password, public_key, balance_btc, reg_date } = this.state;
     const values = { id, wallet_name, get_seed, confirm_seed, password, confirm_password, public_key, balance_btc, reg_date };
 
+    // eslint-disable-next-line
     switch(step) {
       case 1:
         return(
@@ -55,14 +56,14 @@ class SignupForm extends Component {
             handleChange = {this.handleChange}
             values = {values}
           />
-        )
+        );
       case 2:
         return (
           <SignUpSecond
             nextStep = {this.nextStep}
             prevStep = {this.prevStep}
           />
-        )
+        );
       case 3:
         return (
           <SignUpThird
@@ -71,7 +72,7 @@ class SignupForm extends Component {
             handleChange = {this.handleChange}
             values = {values}
           />
-        )
+        );
       case 4:
         return (
           <SignUpFourth
@@ -80,7 +81,7 @@ class SignupForm extends Component {
             handleChange = {this.handleChange}
             values = {values}
           />
-        )
+        );
       case 5:
         return (
           <SignUpFifth
@@ -89,7 +90,7 @@ class SignupForm extends Component {
             handleChange = {this.handleChange}
             values = {values}
           />
-        )
+        );
       case 6:
         return (
           <SignUpSixth
@@ -98,7 +99,7 @@ class SignupForm extends Component {
             handleChange = {this.handleChange}
             values = {values}
           />
-        )
+        );
       case 7:
         return (
           <SignUpSeventh
@@ -107,7 +108,7 @@ class SignupForm extends Component {
             handleChange = {this.handleChange}
             values = {values}
           />
-        )
+        );
     }
   }
 }

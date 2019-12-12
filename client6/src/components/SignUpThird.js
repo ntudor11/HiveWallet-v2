@@ -54,6 +54,8 @@ class SignUpThird extends Component {
   render() {
     const { values, handleChange } = this.props;
 
+    values.get_seed = seedPhrase;
+
     return (
       <Container fluid className="h-100">
         <Row>
@@ -92,8 +94,9 @@ class SignUpThird extends Component {
                           as="textarea"
                           rows="4"
                           readOnly
-                          defaultValue={seedPhrase}
-                          onChange={handleChange('get_seed')}
+                          defaultValue={values.get_seed}
+                          onMouseOver={handleChange('get_seed')}
+                          onMouseOut={handleChange('get_seed')}
                         />
                       </Form.Group>
                     </Form>

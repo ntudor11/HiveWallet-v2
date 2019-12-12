@@ -12,7 +12,20 @@ class SignUpFifth extends Component {
   /* eslint-disable */
   continue = e => {
     e.preventDefault;
-    this.props.nextStep();
+    var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*/;
+    if (this.props.values.password.match(re)) {
+      console.log("Strong password");
+      if (this.props.values.password === this.props.values.confirm_password) {
+        console.log("you can go");
+        this.props.nextStep();
+      } else {
+        alert("Password does not match.");
+        console.log("password does not match");
+      }
+    } else {
+      console.log("Your password does not meet the requirements.");
+      alert("Your password does not meet the requirements.");
+    }
   }
 
   back = e => {
@@ -65,7 +78,7 @@ class SignUpFifth extends Component {
 
                     <Col sm={10}>
                       <Alert.Heading className="alertHeading" >Add Password</Alert.Heading>
-                      <p>Secure your wallet with a strong password that you can remember. Required characters: minimum 1 uppercase, lowercase, number and special character and min 10 characters.</p>
+                      <p>Secure your wallet with a strong password that you can remember. 8 required characters where there are minimum an uppercase and a number.</p>
                     </Col>
                   </Row>
                 </Alert>

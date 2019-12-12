@@ -8,8 +8,6 @@ import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
-import {register} from './UserFunctions';
-var CoinKey = require('coinkey');
 
 class SignUpFirst extends Component {
 

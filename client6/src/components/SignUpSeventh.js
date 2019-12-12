@@ -7,7 +7,9 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai"
+import { AiOutlineEyeInvisible } from "react-icons/ai"
+// import {register} from './UserFunctions';
+// var CoinKey = require('coinkey');
 
 class SignUpSeventh extends Component {
   /* eslint-disable */
@@ -57,7 +59,7 @@ class SignUpSeventh extends Component {
   render() {
     const {
       values: {
-        wallet_name, password
+        wallet_name, password, get_seed, confirm_seed
       }
     } = this.props;
 
