@@ -11,6 +11,24 @@ wallets.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
+wallets.post('/update', (req, res) => {
+  const updatedData = {
+    balance_btc: req.body.balance_btc
+  }
+
+  let query = {_id: req.params.id}
+
+  Wallet.update(query, updatedData, function(err) {
+    if(err) {
+      console.log(err);
+      return;
+    } else {
+      console.log('update was successful');
+      res.redirect('/');
+    }
+  })
+})
+
 wallets.post('/register', (req, res) => {
   //const today = new Date()
   const walletData = {

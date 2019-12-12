@@ -30,7 +30,7 @@ class LoginFirst extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
-  onSubmit(e) { //TODO make it work
+  onSubmit(e) {
     e.preventDefault()
 
     const wallet = {
@@ -145,10 +145,8 @@ class LoginFirst extends Component {
                         </NavLink>
                       </Col>
 
-                      <Col sm={6}> {/* TODO Remove following navlink*/}
-
-                          <Button type="submit" block variant="primary">Log In</Button>
-
+                      <Col sm={6}>
+                        <Button type="submit" block variant="primary">Log In</Button>
                       </Col>
                     </Row>
                   </Form.Group>

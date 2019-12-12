@@ -28,3 +28,13 @@ export const login = wallet => {
     console.log(err)
   })
 }
+
+export const update = wallet => {
+  return axios
+  .post('wallets/update', {
+    balance_btc: wallet.balance_btc
+  })
+  .then(res => {
+    console.log("Updated wallet balance")
+  })
+}

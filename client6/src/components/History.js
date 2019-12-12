@@ -38,7 +38,7 @@ class History extends Component {
     }, () => {
       let self = this;
       fetch('http://localhost:5000/transactions/transactions', {
-          method: 'GET'
+        method: 'GET'
       }).then(function(response) {
           if (response.status >= 400) {
               throw new Error("Bad response from server");
@@ -97,6 +97,19 @@ class History extends Component {
     return dict;
   }
 
+  matchId(transactionerId) { // TODO if have time
+    var data = this.walletIdToName();
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        var value = data[key]
+        if (value === transactionerId) {
+          console.log(value);
+          return value;
+        }
+      }
+    }
+  }
+
   getLatestBtc() { // returns the newest value
     var lastProp;
     for (var key in this.state.btc_data.bpi) {
@@ -122,7 +135,9 @@ class History extends Component {
           charset: 'alphanumeric'
         })}...</td>
         <td>
-            <span>{transaction.sender_id} { this.state.id === transaction.sender_id ? <strong>{this.state.wallet_name} (Me)</strong> : ''}</span>
+            <span>{transaction.sender_id} { this.state.id === transaction.sender_id ? <strong>
+              {this.matchId(this.state.id)}
+              {/*this.state.wallet_name*/} (Me)</strong> : ''}</span>
         </td>
 
         <td>

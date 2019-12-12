@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Switch from "react-switch";
-import {NavLink } from "react-router-dom";
+// import {NavLink } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import jwt_decode from 'jwt-decode';
 
@@ -26,11 +26,15 @@ class Transactions extends Component {
       checked: false
     }
     this.handleChange = this.handleChange.bind(this);
-    this.onChange = this.onChange.bind(this)
+    this.onChange = this.onChange.bind(this);
   }
 
   onChange(e) {
     this.setState({[e.target.name]: e.target.value})
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
   }
 
   handleChange(checked) {
@@ -107,7 +111,10 @@ class Transactions extends Component {
             <div className="switch-type">
               {this.state.checked ?
               <div className="transactionSend">
-              <Form style={{width:"60%", margin:"1em auto"}}>
+              <Form
+                style={{width:"60%", margin:"1em auto"}}
+                onSubmit={this.onSubmit}
+              >
                 <Form.Group className="formTemplate" controlId="exampleForm.ControlSelect3">
                   <Form.Group controlId="formSendTransaction">
                     <Form.Control type="text" placeholder="Send to address / Wallet ID"/>
@@ -137,9 +144,9 @@ class Transactions extends Component {
                     <Row className="colsButtons">
 
                       <Col sm={12}> {/* TODO Remove following navlink*/}
-                        <NavLink exact to="/transactions">
-                          <Button type="submit"  variant="primary">Send Payment</Button>
-                        </NavLink>
+                          <Button
+                          type="submit"
+                          variant="primary">Send Payment</Button>
                       </Col>
                     </Row>
               </Form.Group>
