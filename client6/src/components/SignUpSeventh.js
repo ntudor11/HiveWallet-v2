@@ -17,13 +17,10 @@ class SignUpSeventh extends Component {
     e.preventDefault;
     // PROCESS FORM HERE
     var ck = new CoinKey.createRandom();
-    console.log("Private Key (Wallet Import Format): " + ck.privateWif);
-    console.log("Private Key (Hex): " + ck.privateKey.toString('hex'));
     console.log("Public Address: " + ck.publicAddress);
 
     const wallet = {
       wallet_name: this.props.values.wallet_name,
-      get_seed: this.props.values.get_seed,
       password: this.props.values.password,
       public_key: ck.publicAddress,
       balance_btc: 1 // for transactioning purposes
@@ -110,6 +107,7 @@ class SignUpSeventh extends Component {
                         />
                         <Button
                           className="togglePass"
+                          id="togglePassBtn"
                           onClick={this.togglePass}
                         >
                           <AiOutlineEyeInvisible/>
@@ -134,7 +132,7 @@ class SignUpSeventh extends Component {
                         />
                         <Button
                           style={{zIndex:99}}
-                          id="togglePass"
+                          id="toggleSeedBtn"
                           onClick={this.toggleSeed}
                         >
                           <AiOutlineEyeInvisible/>

@@ -16,7 +16,6 @@ wallets.post('/register', (req, res) => {
   const walletData = {
     id: req.body.id,
     wallet_name: req.body.wallet_name,
-    get_seed: req.body.get_seed,
     password: req.body.password,
     public_key: req.body.public_key,
     balance_btc: req.body.balance_btc,
@@ -32,8 +31,6 @@ wallets.post('/register', (req, res) => {
     if(!wallet) {
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         walletData.password = hash
-        bcrypt.hash(req.body.get_seed, 10, (err, hash) => {
-          walletData.get_seed = hash
           Wallet.create(walletData)
           .then(user => {
             res.json({status: wallet.wallet_name + ' created'})
@@ -42,7 +39,6 @@ wallets.post('/register', (req, res) => {
           .catch(err => {
             res.send('error: ' + err)
           })
-        })
       })
     } else {
       res.json({error: "Wallet Name already exists on your machine."})
@@ -85,16 +81,11 @@ var loggeduser = wallets.post('/login', (req, res) => {
   wallets.get('/profile', function(req, res, next) {
     //here it is
     var wallet = req.wallet;
-    //you probably also want to pass this to your view
     res.render('profile', { title: 'profile', wallet: wallet });
   });
 
 // show JSON list of all wallets
   wallets.get('/walletslist', function(req, res, next) {
-    // res.locals.connection.query('select * from wallets', function (error, results, fields) {
-    //     if(error) throw error;
-    //     res.send(JSON.stringify(results));
-    // });
     Wallet.findAll({
       attributes: ['id', 'wallet_name', 'public_key', 'balance_btc', 'reg_date']
     })

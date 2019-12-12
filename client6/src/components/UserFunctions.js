@@ -4,7 +4,6 @@ export const register = newWallet => {
   return axios
   .post('wallets/register', {
     wallet_name: newWallet.wallet_name,
-    get_seed: newWallet.get_seed,
     password: newWallet.password,
     public_key: newWallet.public_key,
     balance_btc: newWallet.balance_btc,

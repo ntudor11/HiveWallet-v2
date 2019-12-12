@@ -12,9 +12,6 @@ module.exports = db.sequelize.define(
     wallet_name: {
       type: Sequelize.STRING
     },
-    get_seed: {
-      type: Sequelize.STRING
-    },
     password: {
       type: Sequelize.STRING
     },

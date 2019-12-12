@@ -54,7 +54,7 @@ class History extends Component {
         })
       })
       console.log("should work");
-      console.log(this.state.wallet_name);
+      console.log(this.state.wallet_name + this.state.id);
     })
   }
 
@@ -79,15 +79,19 @@ class History extends Component {
       <tr key={transaction.id}>
         <td>d3m0...</td>
         <td>
+            <span>{transaction.sender_id} { this.state.id === transaction.sender_id ? <strong>(Me)</strong> : ''}</span>
+        </td>
+
+        <td>
           { this.state.id !== transaction.receiver_id ?
             <span>Sent To</span> : <span>Received From</span>
           }
         </td>
+
         <td>
-          { this.state.id !== transaction.receiver_id ?
-            <span>d3m0AdDr3sS / {transaction.receiver_id}</span> : <span>d3m0AdDr3sS / {transaction.sender_id}</span>
-          }
+            <span>{transaction.receiver_id} { this.state.id === transaction.receiver_id ? <strong>(Me)</strong> : ''}</span>
         </td>
+
         <td><Timestamp options={{twentyFourHour: true}} date={transaction.transaction_time} /></td>
         <td>₿ {transaction.amount_btc} / <br/>$  {btcToUsd(transaction.amount_btc)}</td>
       </tr>
@@ -111,8 +115,9 @@ class History extends Component {
                   <thead className="tableHeader">
                       <tr>
                           <th>Hash</th>
+                          <th>From Wallet ID</th>
                           <th>Type</th>
-                          <th>Address / Wallet ID</th>
+                          <th>To Wallet ID</th>
                           <th>Timestamp</th>
                           <th>Value (BTC/USD)</th>
                       </tr>

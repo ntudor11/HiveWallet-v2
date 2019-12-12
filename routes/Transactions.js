@@ -8,6 +8,8 @@ const Wallet = require("../routes/Wallets")
 const Transaction = require("../models/Transaction")
 transactions.use(cors())
 
+const activeWallet = Wallet.loggeduser;
+
 // process.env.SECRET_KEY = 'secret'
 
 // show JSON list of all transactions
@@ -35,7 +37,7 @@ transactions.get('/joined_transactions', function(req, res, next) {
 // show JSON list of MY TRANSACTIONS only
 transactions.get('/my_transactions', function(req, res, next) {
     Transaction.findAll({
-      where: {'wallet_name': 'testing'},
+      where: {'sender_id': '3'},
       // include: User.loggeduser,
       attributes: ['id', 'sender_id', 'receiver_id', 'amount_btc', 'transaction_time']
     })
