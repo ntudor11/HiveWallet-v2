@@ -7,6 +7,8 @@ import BitcoinLogo from '../images/icons/bitcoin-logo.svg'
 import jwt_decode from 'jwt-decode';
 import Timestamp from 'react-timestamp';
 
+var randomstring = require("randomstring");
+
 class History extends Component {
   constructor(props) {
     super(props)
@@ -18,6 +20,7 @@ class History extends Component {
       reg_date: '',
       transaction_time: '',
       transactions: [],
+      wallets: [],
       btc_data: {}
     }
   }
@@ -35,16 +38,33 @@ class History extends Component {
     }, () => {
       let self = this;
       fetch('http://localhost:5000/transactions/transactions', {
-          method: 'GET' // TODO change to MY transactions when it works
+          method: 'GET'
       }).then(function(response) {
           if (response.status >= 400) {
               throw new Error("Bad response from server");
           }
           return response.json();
       }).then(function(data) {
-          self.setState({transactions: data});
+          self.setState((prevState) => ({
+            id: prevState.id,
+            transactions: data.filter(item =>
+              item.sender_id === prevState.id |
+              item.receiver_id === prevState.id
+            )
+        }));
       }).catch(err => {
       console.log('caught it!',err);
+      })
+      fetch('http://localhost:5000/wallets/walletslist', {
+          method: 'GET'
+      }).then(function(response) {
+          if (response.status >= 400) {
+              throw new Error("Bad response from server");
+          }
+          return response.json();
+      }).then(function(data) {
+          self.setState({wallets: data});
+          console.log(self.state.wallets)
       })
       fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
       .then(data => data.json())
@@ -54,11 +74,30 @@ class History extends Component {
         })
       })
       console.log("should work");
-      console.log(this.state.wallet_name + this.state.id);
     })
   }
 
-  getLatestBtc() { // returns the oldest value
+  walletIdToName() {
+    const walletItem = this.state.wallets.map(function(wallet) {
+      return {
+        wallet_name: wallet.wallet_name,
+        id: wallet.id
+      }
+    });
+
+    var transactionItem = this.state.transactions.map(function(trans) {
+      return {
+        sender_id: trans.sender_id,
+        receiver_id: trans.receiver_id
+      }
+    });
+
+    const dict = {transactionItem: walletItem}
+    console.log(dict)
+    return dict;
+  }
+
+  getLatestBtc() { // returns the newest value
     var lastProp;
     for (var key in this.state.btc_data.bpi) {
       if(this.state.btc_data.bpi.hasOwnProperty(key)) {
@@ -70,16 +109,20 @@ class History extends Component {
   }
 
   render() {
+    this.walletIdToName();
 
     const btcToUsd = (amountBtc, btcValue = this.getLatestBtc()) => {
       return (amountBtc * btcValue);
     }
 
     const transactionItem = this.state.transactions.map(transaction =>
-      <tr key={transaction.id}>
-        <td>d3m0...</td>
+      <tr className="transactionRow" key={transaction.id}>
+        <td>{randomstring.generate({
+          length: 4,
+          charset: 'alphanumeric'
+        })}...</td>
         <td>
-            <span>{transaction.sender_id} { this.state.id === transaction.sender_id ? <strong>(Me)</strong> : ''}</span>
+            <span>{transaction.sender_id} { this.state.id === transaction.sender_id ? <strong>{this.state.wallet_name} (Me)</strong> : ''}</span>
         </td>
 
         <td>

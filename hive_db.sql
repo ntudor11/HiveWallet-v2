@@ -66,9 +66,9 @@ INSERT INTO wallets (
     receiver_id,
     amount_btc
   ) values (
+    5,
     3,
-    2,
-    1
+    1.25
   );
 
   update wallets, transactions

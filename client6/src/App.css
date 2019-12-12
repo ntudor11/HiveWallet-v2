@@ -54,6 +54,7 @@ h1, h2, h3 {
  .nav-item a {
   color: #fff;
   transition:.2s;
+  -webkit-transition:.2s;
 }
 
 .nav-item span {
@@ -173,6 +174,7 @@ h1, h2, h3 {
   color: #fff !important;
   opacity: 1; /* Firefox */
   transition:0.2s;
+  -webkit-transition:0.2s;
 }
 
 .form-control[readonly] {
@@ -264,6 +266,15 @@ input[type=number] {
   width: 100% !important;
   margin-bottom:1em;
   font-size: 12pt;
+}
+
+.transactionsTable .transactionRow {
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+}
+
+.transactionsTable .transactionRow:hover {
+  background-color: rgba(0,0,0,.5);
 }
 
 .transactionsTable tbody tr:nth-child(even) {
