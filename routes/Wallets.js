@@ -68,6 +68,8 @@ var loggeduser = wallets.post('/login', (req, res) => {
         })
         res.send(token)
         return wallet
+      } else {
+        res.status(400).json({error: "wrong password"})
       }
     } else {
       res.status(400).json({error: 'Wallet does not exist'})

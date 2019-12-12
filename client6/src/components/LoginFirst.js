@@ -8,7 +8,8 @@ import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
-import {login} from './UserFunctions'
+import {login} from './UserFunctions';
+import { IoIosArrowDown } from "react-icons/io";
 
 
 class LoginFirst extends Component {
@@ -17,7 +18,8 @@ class LoginFirst extends Component {
     super()
     this.state = {
       wallet_name: '',
-      password: ''
+      password: '',
+      wallets: []
     }
 
     this.onChange = this.onChange.bind(this)
@@ -42,14 +44,36 @@ class LoginFirst extends Component {
         console.log("Right credentials. Press login again (this step is demo only)")
       } else {
         console.log("Wrong credentials.")
-        var errorLogin = "<p>Wrong credentials. Please check for errors.</p>"
-        var errorPlaceholder = document.getElementById('error-placeholder');
-        errorPlaceholder.innerHTML += errorLogin;
+        var errorLogin = "Wrong credentials. Please check for errors."
+        alert(errorLogin);
       }
+    }).catch(err => {
+      console.log(err)
+      console.log("not working")
+    })
+  }
+
+  componentDidMount() {
+    let self = this;
+    fetch('http://localhost:5000/wallets/walletslist', {
+        method: 'GET'
+    }).then(function(response) {
+        if (response.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return response.json();
+    }).then(function(data) {
+        self.setState({wallets: data});
+    }).catch(err => {
+    console.log('caught it!',err);
     })
   }
 
   render() {
+    const walletItem = this.state.wallets.map(wallet =>
+      wallet.wallet_name
+    );
+
     return (
       <Container fluid className="h-100">
         <Row>
@@ -70,27 +94,39 @@ class LoginFirst extends Component {
 
                     <Col sm={10}>
                       <Alert.Heading className="alertHeading" >Authentication method</Alert.Heading>
-                      <p>Choose your wallet from the list to the left and input the corresponding password.</p>
+                      <p>Choose your wallet from the list below and type the corresponding password.</p>
                     </Col>
                   </Row>
                 </Alert>
 
                 <Form noValidate onSubmit={this.onSubmit}>
-                  <Form.Group className="formTemplate" controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Choose Existing Wallet</Form.Label>
-                    {/*<Form.Control as="select">
-                      <option>Wallet 1</option>
-                      <option>Wallet 2</option>
-                      <option>Wallet 3</option>
-                    </Form.Control> */}
+                  <Form.Group
+                    className="formTemplate"
+                    controlId="exampleForm.ControlSelect1"
+                    >
+                    <Form.Group className="formTemplate" controlId="formSelectWallet" id="formSelectWallet">
+                      <Form.Label>Choose Existing Wallet</Form.Label>
+                      <Form.Control
+                        style={{zIndex:'2'}}
+                        as="select"
+                        name="wallet_name"
+                        value={this.state.wallet_name}
+                        onChange = {this.onChange}
+                        >
+                        <option>Choose existing wallet</option>
+                        {walletItem.map(item => (
+                          <option key={item.toString()} value={item}>{item}</option>
+                        ))}
+                      </Form.Control>
 
-                    <Form.Control
-                      type="text"
-                      name="wallet_name"
-                      placeholder="Enter Wallet Name"
-                      value={this.state.wallet_name}
-                      onChange={this.onChange}
-                    />
+                      <span
+                        className="togglePass, togglePass2"
+                      >
+                        <IoIosArrowDown/>
+                      </span>
+                    </Form.Group>
+
+
                     <br/>
                     <Form.Group controlId="formBasicPassword">
                       <Form.Control
@@ -123,8 +159,6 @@ class LoginFirst extends Component {
             <Row className="colsButtons">
               <Col sm={3} lg={4}></Col>
               <Col sm={6} lg={4}>
-                <div id="error-placeholder">
-                </div>
               </Col>
               <Col sm={3} lg={4}></Col>
             </Row>

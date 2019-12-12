@@ -109,7 +109,7 @@ class SignUpSeventh extends Component {
                           readOnly
                         />
                         <Button
-                          id="togglePass"
+                          className="togglePass"
                           onClick={this.togglePass}
                         >
                           <AiOutlineEyeInvisible/>
