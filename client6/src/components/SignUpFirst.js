@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import {NavLink } from "react-router-dom";
-import {register} from './UserFunctions'
+import {register} from './UserFunctions';
 var CoinKey = require('coinkey');
 
 class SignUpFirst extends Component {
@@ -16,7 +16,12 @@ class SignUpFirst extends Component {
   /* eslint-disable */
   continue = e => {
     e.preventDefault;
-    this.props.nextStep();
+    if (this.props.values.wallet_name.length < 4) {
+      console.log("not allowed");
+      alert("The wallet name cannot contain less than 4 characters.");
+    } else {
+      this.props.nextStep();
+    }
   }
 
   // constructor(props) {

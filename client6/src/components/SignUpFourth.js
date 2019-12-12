@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
-import {NavLink } from "react-router-dom";
 
 class SignUpFourth extends Component {
 
@@ -22,38 +21,40 @@ class SignUpFourth extends Component {
     this.props.prevStep();
   }
 
-  constructor() {
-    super()
-    this.state = {
-      walletName: '',
-      password: ''
-    }
-
-    this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  onChange(e) {
-    this.setState({[e.target.name]: e.target.value})
-  }
-
-  onSubmit(e) { //TODO make it work
-    e.preventDefault()
-
-    // const wallet = {
-    //   walletName: this.state.walletName,
-    //   password: this.state.password
-    // }
-  }
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     walletName: '',
+  //     password: ''
+  //   }
+  //
+  //   this.onChange = this.onChange.bind(this)
+  //   this.onSubmit = this.onSubmit.bind(this)
+  // }
+  //
+  // onChange(e) {
+  //   this.setState({[e.target.name]: e.target.value})
+  // }
+  //
+  // onSubmit(e) { //TODO make it work
+  //   e.preventDefault()
+  //
+  //   // const wallet = {
+  //   //   walletName: this.state.walletName,
+  //   //   password: this.state.password
+  //   // }
+  // }
 
   render() {
+    const { values, handleChange } = this.props;
+
     return (
       <Container fluid className="h-100">
         <Row>
           <Col className="content loginsignup">
             <Row className="logoContainer">
               <Col sm={12}>
-                <img src={logo} className="logoFront" alt="Hive logo"/>
+                <img src={logo} className="logoFront" alt="Hive-logo"/>
               </Col>
             </Row>
             <Row>
@@ -72,18 +73,23 @@ class SignUpFourth extends Component {
                   </Row>
                 </Alert>
 
-                <Form noValidate onSubmit={this.onSubmit}>
+                <Form noValidate>
                   <Form.Group className="formTemplate" controlId="formNewWallet">
 
                     <Form.Group controlId="formBasicPassword">
-                      <Form.Control as="textarea" placeholder="Enter Seed Phrase" />
+                      <Form.Control
+                        as="textarea"
+                        placeholder="Enter Seed Phrase"
+                        onChange={handleChange('confirm_seed')}
+                        defaultValue={values.confirm_seed}
+                      />
                     </Form.Group>
 
                     <Row className="colsButtons">
                       <Col sm={6}>
                         <Button block
-                          variant="primary"
-                          onClick={this.back}>Next
+                          variant="outline-primary"
+                          onClick={this.back}>Back
                         </Button>
                       </Col>
 

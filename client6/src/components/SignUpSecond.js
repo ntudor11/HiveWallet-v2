@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
-import {NavLink } from "react-router-dom";
 
 class SignUpSecond extends Component {
   /* eslint-disable */
@@ -21,29 +20,29 @@ class SignUpSecond extends Component {
     this.props.prevStep();
   }
 
-  constructor() {
-    super()
-    this.state = {
-      walletName: '',
-      password: ''
-    }
-
-    this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  onChange(e) {
-    this.setState({[e.target.name]: e.target.value})
-  }
-
-  onSubmit(e) { //TODO make it work
-    e.preventDefault()
-
-    // const wallet = {
-    //   walletName: this.state.walletName,
-    //   password: this.state.password
-    // }
-  }
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     walletName: '',
+  //     password: ''
+  //   }
+  //
+  //   this.onChange = this.onChange.bind(this)
+  //   this.onSubmit = this.onSubmit.bind(this)
+  // }
+  //
+  // onChange(e) {
+  //   this.setState({[e.target.name]: e.target.value})
+  // }
+  //
+  // onSubmit(e) { //TODO make it work
+  //   e.preventDefault()
+  //
+  //   // const wallet = {
+  //   //   walletName: this.state.walletName,
+  //   //   password: this.state.password
+  //   // }
+  // }
 
   render() {
     return (
@@ -75,8 +74,8 @@ class SignUpSecond extends Component {
                 <Row className="colsButtons">
                   <Col sm={6}>
                     <Button block
-                      variant="primary"
-                      onClick={this.back}>Next
+                      variant="outline-primary"
+                      onClick={this.back}>Back
                     </Button>
                   </Col>
 

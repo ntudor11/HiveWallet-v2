@@ -192,6 +192,31 @@ h1, h2, h3 {
   margin-bottom:1em;
 }
 
+#togglePass {
+  margin-top:-40px;
+  float:right;
+  background-color: rgba(0,0,0,0);
+  color: white;
+  border: 0;
+}
+
+.checkDataContainer p {
+  text-align: left;
+  margin-left: 7px;
+}
+
+#approvePass {
+  font-family: josefinSansRegular;
+}
+
+.approveLabel {
+  margin-top:6px;
+}
+
+#togglePass:focus {
+  outline:0;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */

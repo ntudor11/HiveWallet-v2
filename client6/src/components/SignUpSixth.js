@@ -7,10 +7,14 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
-import {NavLink } from "react-router-dom";
+// import {NavLink } from "react-router-dom";
 
+var randomstring = require("randomstring");
 var qr = require('qr-encode');
-var secretKey = "jrkdi+e+H9n0FGrw*ky"
+var secretKey = randomstring.generate({
+  length: 16,
+  charset: 'alphanumeric'
+});
 var dataURI = qr(secretKey, {type: 6, size: 6, level: 'M'});
 
 class SignUpSixth extends Component {
@@ -25,29 +29,29 @@ class SignUpSixth extends Component {
     this.props.prevStep();
   }
 
-  constructor() {
-    super()
-    this.state = {
-      walletName: '',
-      password: ''
-    }
-
-    this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  onChange(e) {
-    this.setState({[e.target.name]: e.target.value})
-  }
-
-  onSubmit(e) { //TODO make it work
-    e.preventDefault()
-
-    // const wallet = {
-    //   walletName: this.state.walletName,
-    //   password: this.state.password
-    // }
-  }
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     walletName: '',
+  //     password: ''
+  //   }
+  //
+  //   this.onChange = this.onChange.bind(this)
+  //   this.onSubmit = this.onSubmit.bind(this)
+  // }
+  //
+  // onChange(e) {
+  //   this.setState({[e.target.name]: e.target.value})
+  // }
+  //
+  // onSubmit(e) { //TODO make it work
+  //   e.preventDefault()
+  //
+  //   // const wallet = {
+  //   //   walletName: this.state.walletName,
+  //   //   password: this.state.password
+  //   // }
+  // }
 
   render() {
     return (
@@ -79,7 +83,7 @@ class SignUpSixth extends Component {
                     <img className="qrFromSeed" src={dataURI} alt="qr-from-seed" style={{width:"100%", margin:"0 auto", border:"10px solid white"}}/>
                   </Col>
                   <Col sm={8}>
-                    <Form noValidate onSubmit={this.onSubmit}>
+                    <Form noValidate>
                       <Form.Group className="formTemplate" controlId="form2FA">
                         <Form.Control type="text" readOnly defaultValue={secretKey} />
                         <Form.Control type="text" placeholder="Enter Verification Code" />
@@ -96,8 +100,8 @@ class SignUpSixth extends Component {
               <Row className="">
                 <Col sm={6}>
                   <Button block
-                    variant="primary"
-                    onClick={this.back}>Next
+                    variant="outline-primary"
+                    onClick={this.back}>Back
                   </Button>
                 </Col>
 

@@ -7,17 +7,29 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai"
 
-class SignUpFifth extends Component {
+class SignUpSeventh extends Component {
   /* eslint-disable */
   continue = e => {
     e.preventDefault;
+    // PROCESS FORM HERE
     this.props.nextStep();
   }
 
   back = e => {
     e.preventDefault;
     this.props.prevStep();
+  }
+
+  toggle = e => {
+    e.preventDefault;
+    let pass = document.getElementById("approvePass");
+    if (pass.type === "password") {
+      pass.type = "text";
+    } else {
+      pass.type = "password";
+    }
   }
 
   // constructor(props) {
@@ -43,7 +55,11 @@ class SignUpFifth extends Component {
   // }
 
   render() {
-    const { values, handleChange } = this.props;
+    const {
+      values: {
+        wallet_name, password
+      }
+    } = this.props;
 
     return (
       <Container fluid className="h-100">
@@ -64,46 +80,53 @@ class SignUpFifth extends Component {
                     </Col>
 
                     <Col sm={10}>
-                      <Alert.Heading className="alertHeading" >Add Password</Alert.Heading>
-                      <p>Secure your wallet with a strong password that you can remember. Required characters: minimum 1 uppercase, lowercase, number and special character and min 10 characters.</p>
+                      <Alert.Heading className="alertHeading" >Confirm Data</Alert.Heading>
+                      <p>Re-check the data you have entered and proceed when you consider it is correct.</p>
                     </Col>
                   </Row>
                 </Alert>
 
-                <Form noValidate>
-                  <Form.Group className="formTemplate" controlId="formNewWallet">
+                <div className="checkDataContainer">
+                  <p>Wallet Name: <strong>{wallet_name}</strong></p>
+                </div>
 
-                    <Form.Control
-                      type="password"
-                      placeholder="New Password"
-                      onChange={handleChange('password')}
-                      defaultValue={values.password}
-                    />
-
-                    <Form.Control
-                      type="password"
-                      placeholder="Repeat Password"
-                      onChange={handleChange('confirm_password')}
-                      defaultValue={values.confirm_password}
-                    />
-
-                    <Row className="colsButtons">
-                      <Col sm={6}>
-                        <Button block
-                          variant="outline-primary"
-                          onClick={this.back}>Back
+                <Row>
+                  <Col sm={3}><p className="approveLabel">Password:</p></Col>
+                  <Col sm={9}>
+                    <Form noValidate>
+                      <Form.Group className="formTemplate" controlId="formApprovePass" id="formApprovePass">
+                        <Form.Control
+                          id = "approvePass"
+                          type="password"
+                          placeholder="Password"
+                          defaultValue={password}
+                          readOnly
+                        />
+                        <Button
+                          id="togglePass"
+                          onClick={this.toggle}
+                        >
+                          <AiOutlineEyeInvisible/>
                         </Button>
-                      </Col>
+                      </Form.Group>
+                    </Form>
+                  </Col>
+                </Row>
+                <Row className="colsButtons">
+                  <Col sm={6}>
+                    <Button block
+                      variant="outline-primary"
+                      onClick={this.back}>Back
+                    </Button>
+                  </Col>
 
-                      <Col sm={6}>
-                        <Button block
-                          variant="primary"
-                          onClick={this.continue}>Next
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Form>
+                  <Col sm={6}>
+                    <Button block
+                      variant="primary"
+                      onClick={this.continue}>Create Wallet
+                    </Button>
+                  </Col>
+                </Row>
               </Col>
               <Col sm={3} lg={4}></Col>
             </Row>
@@ -121,4 +144,4 @@ class SignUpFifth extends Component {
   }
 }
 
-export default SignUpFifth;
+export default SignUpSeventh;

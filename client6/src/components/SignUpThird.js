@@ -8,7 +8,6 @@ import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import doge from '../images/doge.png';
 import InfoWhite from '../images/icons/information-white.svg';
-import {NavLink } from "react-router-dom";
 
 const dogeSeed = require('doge-seed');
 var qr = require('qr-encode');
@@ -28,31 +27,33 @@ class SignUpThird extends Component {
     this.props.prevStep();
   }
 
-  constructor() {
-    super()
-    this.state = {
-      walletName: '',
-      password: ''
-    }
-
-    this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  onChange(e) {
-    this.setState({[e.target.name]: e.target.value})
-  }
-
-  onSubmit(e) { //TODO make it work
-    e.preventDefault()
-
-    // const wallet = {
-    //   walletName: this.state.walletName,
-    //   password: this.state.password
-    // }
-  }
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     walletName: '',
+  //     password: ''
+  //   }
+  //
+  //   this.onChange = this.onChange.bind(this)
+  //   this.onSubmit = this.onSubmit.bind(this)
+  // }
+  //
+  // onChange(e) {
+  //   this.setState({[e.target.name]: e.target.value})
+  // }
+  //
+  // onSubmit(e) { //TODO make it work
+  //   e.preventDefault()
+  //
+  //   // const wallet = {
+  //   //   walletName: this.state.walletName,
+  //   //   password: this.state.password
+  //   // }
+  // }
 
   render() {
+    const { values, handleChange } = this.props;
+
     return (
       <Container fluid className="h-100">
         <Row>
@@ -87,7 +88,13 @@ class SignUpThird extends Component {
                   <Col sm={8}>
                     <Form noValidate onSubmit={this.onSubmit}>
                       <Form.Group className="formTemplate" controlId="formGetSeed">
-                        <Form.Control as="textarea" rows="4" readOnly defaultValue={seedPhrase} />
+                        <Form.Control
+                          as="textarea"
+                          rows="4"
+                          readOnly
+                          defaultValue={seedPhrase}
+                          onChange={handleChange('get_seed')}
+                        />
                       </Form.Group>
                     </Form>
                   </Col>
@@ -101,8 +108,8 @@ class SignUpThird extends Component {
               <Row className="">
                 <Col sm={6}>
                   <Button block
-                    variant="primary"
-                    onClick={this.back}>Next
+                    variant="outline-primary"
+                    onClick={this.back}>Back
                   </Button>
                 </Col>
 

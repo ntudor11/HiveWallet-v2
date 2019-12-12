@@ -5,14 +5,17 @@ import SignUpThird from './SignUpThird';
 import SignUpFourth from './SignUpFourth';
 import SignUpFifth from './SignUpFifth';
 import SignUpSixth from './SignUpSixth';
+import SignUpSeventh from './SignUpSeventh';
 
 class SignupForm extends Component {
   state = {
     step: 1,
     id:'',
     wallet_name: '',
-    seed_phrase: '',
+    get_seed: '',
+    confirm_seed: '',
     password: '',
+    confirm_password: '',
     public_key: '',
     balance_btc: '',
     reg_date: ''
@@ -41,8 +44,8 @@ class SignupForm extends Component {
 
   render() {
     const { step } = this.state;
-    const { id, wallet_name, seed_phrase, password, public_key, balance_btc, reg_date } = this.state;
-    const values = { id, wallet_name, seed_phrase, password, public_key, balance_btc, reg_date };
+    const { id, wallet_name, get_seed, confirm_seed, password, confirm_password, public_key, balance_btc, reg_date } = this.state;
+    const values = { id, wallet_name, get_seed, confirm_seed, password, confirm_password, public_key, balance_btc, reg_date };
 
     switch(step) {
       case 1:
@@ -90,6 +93,15 @@ class SignupForm extends Component {
       case 6:
         return (
           <SignUpSixth
+            nextStep = {this.nextStep}
+            prevStep = {this.prevStep}
+            handleChange = {this.handleChange}
+            values = {values}
+          />
+        )
+      case 7:
+        return (
+          <SignUpSeventh
             nextStep = {this.nextStep}
             prevStep = {this.prevStep}
             handleChange = {this.handleChange}
