@@ -21,7 +21,12 @@ class History extends Component {
       transaction_time: '',
       transactions: [],
       wallets: [],
-      btc_data: {}
+      coinmarket: [
+        {
+          price_usd: '',
+          market_cap_usd: ''
+        }
+      ]
     }
   }
 
@@ -64,20 +69,20 @@ class History extends Component {
           return response.json();
       }).then(function(data) {
           self.setState({wallets: data});
-          console.log(self.state.wallets)
       })
-      fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
+
+      fetch('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
       .then(data => data.json())
       .then(data => {
         this.setState({
-          btc_data: data
+          coinmarket: data
         })
-      })
+      });
       console.log("should work");
     })
   }
 
-  walletIdToName() {
+  walletIdToName() { // first part of viewing transactioning wallet ID as wallet name
     const walletItem = this.state.wallets.map(function(wallet) {
       return {
         wallet_name: wallet.wallet_name,
@@ -85,6 +90,7 @@ class History extends Component {
       }
     });
 
+    // eslint-disable-next-line
     var transactionItem1 = this.state.transactions.map(function(trans) {
       return {
         sender_id: trans.sender_id,
@@ -93,39 +99,42 @@ class History extends Component {
     });
 
     const dict = {transactionItem1: walletItem}
-    console.log(dict)
-    return dict;
+    console.log(dict.transactionItem1)
+    return dict.transactionItem1;
   }
 
-  matchId(transactionerId) { // TODO if have time
+  matchId(transactionerId) {
     var data = this.walletIdToName();
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        var value = data[key]
-        if (value === transactionerId) {
-          console.log(value);
-          return value;
-        }
-      }
+    console.log(transactionerId);
+    var value;
+    var BreakException= {};
+
+    try {
+      data.forEach((wallet) => {
+        value = wallet.wallet_name;
+        var key = wallet.id;
+        if (key === transactionerId) {
+          console.log(value + " it works!!!");
+          throw BreakException;
+        } else (
+          console.log("cannot find wallet")
+        )
+      })
+    } catch(e) {
+      if (e!==BreakException) throw e;
     }
+
+    return value;
   }
 
-  getLatestBtc() { // returns the newest value
-    var lastProp;
-    for (var key in this.state.btc_data.bpi) {
-      if(this.state.btc_data.bpi.hasOwnProperty(key)) {
-        lastProp = this.state.btc_data.bpi[key];
-        // console.log(key+ " " + firstProp);
-      }
-    }
-    return lastProp;
+  getCurrentPrice() {
+    var currentPrice = this.state.coinmarket[0].price_usd;
+    return (+(currentPrice)).toFixed(2);
   }
 
   render() {
-    this.walletIdToName();
-
-    const btcToUsd = (amountBtc, btcValue = this.getLatestBtc()) => {
-      return (amountBtc * btcValue);
+    const btcToUsd = (amountBtc, btcValue = this.getCurrentPrice()) => {
+      return (amountBtc * btcValue).toFixed(2);
     }
 
     const transactionItem = this.state.transactions.map(transaction =>
@@ -135,19 +144,16 @@ class History extends Component {
           charset: 'alphanumeric'
         })}...</td>
         <td>
-            <span>{transaction.sender_id} { this.state.id === transaction.sender_id ? <strong>
-              {this.matchId(this.state.id)}
-              {/*this.state.wallet_name*/} (Me)</strong> : ''}</span>
+            {this.matchId(transaction.sender_id)} { this.state.id === transaction.sender_id ?
+               <strong>
+
+              {/*this.state.wallet_name*/} (Me)</strong> :
+              ''
+            }
         </td>
 
         <td>
-          { this.state.id !== transaction.receiver_id ?
-            <span>Sent To</span> : <span>Received From</span>
-          }
-        </td>
-
-        <td>
-            <span>{transaction.receiver_id} { this.state.id === transaction.receiver_id ? <strong>(Me)</strong> : ''}</span>
+            <span>{this.matchId(transaction.receiver_id)} { this.state.id === transaction.receiver_id ? <strong>(Me)</strong> : ''}</span>
         </td>
 
         <td><Timestamp options={{twentyFourHour: true}} date={transaction.transaction_time} /></td>
@@ -173,9 +179,8 @@ class History extends Component {
                   <thead className="tableHeader">
                       <tr>
                           <th>Hash</th>
-                          <th>From Wallet ID</th>
-                          <th>Type</th>
-                          <th>To Wallet ID</th>
+                          <th>Sender</th>
+                          <th>Receiver</th>
                           <th>Timestamp</th>
                           <th>Value (BTC/USD)</th>
                       </tr>

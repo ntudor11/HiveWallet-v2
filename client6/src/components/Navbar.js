@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router'
 import {NavLink } from "react-router-dom";
-
 //import icons
 import DashboardDes from '../images/icons/dashboard-deselected.svg';
 import StatsDes from '../images/icons/statistics-deselected.svg';
@@ -60,10 +59,13 @@ class Navbar extends Component {
           </li>
 
           <li className="nav-item">
+            {/* eslint-disable-next-line */}
             <a href="#" onClick={this.logOut.bind(this)} to="/register" className="nav-link underline-from-center">
+
               <img src={LogOutDes} alt="img"/>
               <span>Log Out</span>
             </a>
+
           </li>
         </ul>
       </Col>

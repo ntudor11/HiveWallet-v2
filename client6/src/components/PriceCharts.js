@@ -87,16 +87,6 @@ class PriceCharts extends Component {
     return testData;
   }
 
-  getLatestBtc() { // returns the oldest value
-    var lastProp;
-    for (var key in this.state.data.bpi) {
-      if(this.state.data.bpi.hasOwnProperty(key)) {
-        lastProp = this.state.data.bpi[key];
-      }
-    }
-    return lastProp;
-  }
-
   getMarketCap(){
     var marketCap = this.state.coinmarket[0].market_cap_usd;
     return marketCap;
@@ -116,10 +106,6 @@ class PriceCharts extends Component {
   }
 
   render() {
-    const { data } = this.state;
-
-    this.getChartData();
-    this.getLatestBtc();
 
     return (
       <Container fluid className="h-100">

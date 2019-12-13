@@ -127,11 +127,6 @@ class Wallet extends Component {
   }
 
   render() {
-    const { btc_data } = this.state;
-    console.log(btc_data.bpi);
-    console.log(this.getLatestBtc());
-    console.log(this.getValueChange());
-    // console.log(this.getData());
     return (
       <Container fluid className="h-100">
         <Row>
