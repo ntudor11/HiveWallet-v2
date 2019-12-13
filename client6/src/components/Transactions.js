@@ -147,7 +147,7 @@ class Transactions extends Component {
                           <Button
                           type="submit"
                           variant="primary">Send Payment</Button>
-                          <span class="tooltiptext">This feature is coming soon. </span>
+                          <span className="tooltiptext">This feature is coming soon. </span>
                       </Col>
                     </Row>
               </Form.Group>

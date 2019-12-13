@@ -30,7 +30,7 @@ class LogSignIn extends Component {
 
                 <div className="demoHolder">
                   <Button block variant="outline-primary">Restore Wallet</Button>
-                  <span class="tooltiptext">This feature is coming soon.</span>
+                  <span className="tooltiptext">This feature is coming soon.</span>
                 </div>
               </Col>
               <Col sm={4}></Col>

@@ -87,7 +87,7 @@ class PriceCharts extends Component {
       labels: [],
       datasets: [
         {
-          label: "Value (USD)",
+          label: "BTC Value (USD)",
           data: [],
           backgroundColor:[
             'rgba(255, 99, 132, 0.6)',
@@ -101,21 +101,16 @@ class PriceCharts extends Component {
         }
       ]
     };
-    // for (var key in this.state.data.bpi) {
-    //   var value = this.state.data.bpi[key];
-    //   testData.datasets.data = value;
-    // }
-    // testData.datasets.data = [this.state.bpi];
+
     for (var key in this.state.data.bpi) {
-      var value = this.state.data.bpi[key];
       testData.labels.push(key);
-      // for (var i = 0; i <= 31; i++) {
-      testData.datasets[0].data[key] = value;
-      // }
+      var value = this.state.data.bpi[key];
+      testData.datasets[0].data.push(value);
     }
-    console.log(typeof testData.datasets[0].data);
-    console.log(testData);
-    console.log(this.state.chartData);
+    console.log(typeof testData.datasets);
+    console.log(testData.datasets);
+    console.log(this.state.chartData.datasets);
+
     return testData;
   }
 
@@ -167,7 +162,7 @@ class PriceCharts extends Component {
             <Row>
               <Col className="chart" style={{height:"20em"}} sm={12}>
                 <Line
-                  data={this.state.chartData}
+                  data={this.getChartData()}
                   width={100}
                   height={50}
                   options={{ maintainAspectRatio: false }}
@@ -179,7 +174,7 @@ class PriceCharts extends Component {
               <Col sm={2}></Col>
               <Col sm={8}>
                 <p className="disclaimer">{this.state.data.disclaimer}</p>
-                <code>{JSON.stringify(data.bpi)}</code>
+
               </Col>
               <Col sm={2}></Col>
             </Row>
