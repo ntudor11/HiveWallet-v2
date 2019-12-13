@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
-// import {NavLink } from "react-router-dom";
+import { FiCopy } from "react-icons/fi"
 
 var randomstring = require("randomstring");
 var qr = require('qr-encode');
@@ -18,6 +18,13 @@ var secretKey = randomstring.generate({
 var dataURI = qr(secretKey, {type: 6, size: 6, level: 'M'});
 
 class SignUpSixth extends Component {
+
+  constructor(props) {
+    super(props)
+    this.myRef = React.createRef()
+    this.holderRef = React.createRef()
+  }
+
   /* eslint-disable */
   continue = e => {
     e.preventDefault;
@@ -62,9 +69,32 @@ class SignUpSixth extends Component {
                     <Form noValidate>
                       <Form.Group className="formTemplate" controlId="form2FA">
                         <Form.Control type="text" readOnly defaultValue={secretKey} />
+                        <Button
+                          className="copy"
+                          id="togglePassBtn"
+                          onClick={() => {navigator.clipboard.writeText(secretKey).then(
+                            () => {
+                              var copied = "<p>Copied to clipboard</p>";
+                              var copiedPlaceholder = this.myRef.current;
+                              copiedPlaceholder.innerHTML += copied;
+                            }).then(() => {
+                              setTimeout( () => {
+                                this.myRef.current.remove();
+                              }, 1000)
+                            })
+                          }
+                        }
+                        >
+                          <FiCopy/>
+                        </Button>
+                      </Form.Group>
+                      <Form.Group className="formTemplate">
                         <Form.Control type="text" placeholder="Enter Verification Code" />
                       </Form.Group>
                     </Form>
+                    <div className="copy-placeholder" ref={this.holderRef}>
+                      <p className="hideMe" ref={this.myRef}></p>
+                    </div>
                   </Col>
                 </Row>
               </Col>

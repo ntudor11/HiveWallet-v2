@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useRef} from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Switch from "react-switch";
 // import {NavLink } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import { FiCopy } from "react-icons/fi"
 import jwt_decode from 'jwt-decode';
 
 var qr = require('qr-encode');
@@ -14,6 +15,8 @@ var qr = require('qr-encode');
 class Transactions extends Component {
   constructor(props) {
     super(props)
+    this.myRef = React.createRef()
+    this.holderRef = React.createRef()
     this.state = {
       wallet_name: '',
       public_key: '',
@@ -23,6 +26,12 @@ class Transactions extends Component {
       transaction_time: '',
       transactions: [],
       btc_data: {},
+      coinmarket: [
+        {
+          price_usd: '',
+          market_cap_usd: ''
+        }
+      ],
       checked: false
     }
     this.handleChange = this.handleChange.bind(this);
@@ -56,7 +65,14 @@ class Transactions extends Component {
         this.setState({
           btc_data: json
           // data.labels:
-        });
+        })
+      })
+      fetch('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
+      .then(data => data.json())
+      .then(data => {
+        this.setState({
+          coinmarket: data
+        })
       });
     })
   }
@@ -64,6 +80,11 @@ class Transactions extends Component {
   viewPublicKey() {
     var dataURI = qr(this.state.public_key, {type: 6, size: 6, level: 'M'});
     return dataURI;
+  }
+
+  getCurrentPrice() {
+    var currentPrice = this.state.coinmarket[0].price_usd;
+    return currentPrice;
   }
 
   getLatestBtc() { // returns the oldest value
@@ -79,8 +100,23 @@ class Transactions extends Component {
 
   btcToUsd() {
     // const convertToUsd = (priceCharts.getLatestBtc() * this.state.balance_btc);
-    return (this.getLatestBtc() * this.state.sendBtc);
+    return (this.getCurrentPrice() * this.state.sendBtc);
   }
+
+  copyText(stateComponent) {
+    navigator.clipboard.writeText(stateComponent);
+  }
+  //
+  demo() {
+    var errorLogin = "<p>Wrong credentials. Please check for errors.</p>"
+    var errorPlaceholder = document.getElementById('error-placeholder');
+    errorPlaceholder.innerHTML += errorLogin;
+  }
+
+  // copyText() {
+    // navigator.clipboard.writeText(this.state.public_key);
+    // document.getElementById("copyplaceholder").innerHTML = "You copied text!"
+  // }
 
   render() {
     return (
@@ -154,7 +190,7 @@ class Transactions extends Component {
             </Form>
               </div>
                  :
-              <div className="transactionReceive">
+              <div className="transactionReceive" ref={this.holderRef}>
                 <p style={{fontFamily:"josefinSansRegular"}}>Your Public Key:</p>
                 <img src={this.viewPublicKey()} alt="qrcode-wallet-address" style={{width:"200px", border:"10px solid white"}}/>
                 <Form style={{width:"60%", margin:"1em auto"}}>
@@ -162,9 +198,30 @@ class Transactions extends Component {
 
                     <Form.Group controlId="formBtcAddress">
                       <Form.Control type="text" placeholder="" defaultValue={this.state.public_key} readOnly/>
+                      <Button
+                        className="copy"
+                        id="togglePassBtn"
+                        onClick={() => {navigator.clipboard.writeText(this.state.public_key).then(
+                          () => {
+                            var copied = "<p>Copied to clipboard</p>";
+                            var copiedPlaceholder = this.myRef.current;
+                            copiedPlaceholder.innerHTML += copied;
+                          }).then(() => {
+                            setTimeout( () => {
+                              this.myRef.current.remove();
+                            }, 1000)
+                          })
+                        }
+                      }
+                      >
+                        <FiCopy/>
+                      </Button>
                     </Form.Group>
                 </Form.Group>
               </Form>
+              <div className="copy-placeholder" ref={this.holderRef}>
+                <p className="hideMe" ref={this.myRef}></p>
+              </div>
             </div>
             }
             </div>
