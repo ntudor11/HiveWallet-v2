@@ -19,46 +19,12 @@ class PriceCharts extends Component {
         labels: [],
         datasets: []
       },
-      chartData: {
-        labels: [
-          "2019-11-08",
-          "2019-11-09",
-          "2019-11-10",
-          "2019-11-11",
-          "2019-11-12",
-          "2019-11-13",
-          "2019-11-14",
-          "2019-11-15",
-          "2019-11-16",
-          "2019-11-17"
-        ],
-        datasets: [
-          {
-            label: 'Value (USD)',
-            data: [
-              8770.3617,
-              8813.3567,
-              9044,
-              8726.36,
-              8820.2333,
-              8775.1017,
-              8639.1833,
-              8471.2783,
-              8496.6,
-              8516.08
-            ],
-            backgroundColor:[
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-              'rgba(255, 99, 132, 0.6)'
-            ]
-          }
-        ]
-      }
+      coinmarket: [
+        {
+          price_usd: '',
+          market_cap_usd: ''
+        }
+      ]
     }
   }
 
@@ -78,6 +44,13 @@ class PriceCharts extends Component {
           data: json
           // data.labels:
         });
+      })
+      fetch('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
+      .then(data => data.json())
+      .then(data => {
+        this.setState({
+          coinmarket: data
+        })
       });
     })
   }
@@ -107,9 +80,9 @@ class PriceCharts extends Component {
       var value = this.state.data.bpi[key];
       testData.datasets[0].data.push(value);
     }
-    console.log(typeof testData.datasets);
-    console.log(testData.datasets);
-    console.log(this.state.chartData.datasets);
+
+    console.log(testData.datasets[0]);
+    console.log(this.state.data);
 
     return testData;
   }
@@ -119,15 +92,31 @@ class PriceCharts extends Component {
     for (var key in this.state.data.bpi) {
       if(this.state.data.bpi.hasOwnProperty(key)) {
         lastProp = this.state.data.bpi[key];
-        // console.log(key+ " " + firstProp);
       }
     }
     return lastProp;
   }
 
+  getMarketCap(){
+    var marketCap = this.state.coinmarket[0].market_cap_usd;
+    return marketCap;
+  }
+
+  getCurrentPrice() {
+    var currentPrice = this.state.coinmarket[0].price_usd;
+    return (+(currentPrice)).toFixed(2);
+  }
+
+  formatCash = n => {
+    if (n < 1e3) return n;
+    if (n >= 1e3 && n < 1e6) return +(n / 1e3).toFixed(1) + "K";
+    if (n >= 1e6 && n < 1e9) return +(n / 1e6).toFixed(1) + "M";
+    if (n >= 1e9 && n < 1e12) return +(n / 1e9).toFixed(1) + "B";
+    // if (n >= 1e12) return +(n / 1e12).toFixed(1) + "T";
+  }
+
   render() {
     const { data } = this.state;
-    console.log(data);
 
     this.getChartData();
     this.getLatestBtc();
@@ -147,14 +136,14 @@ class PriceCharts extends Component {
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder">
                   <p className="walletKpiName">Current Value</p>
-                  <h3 className="walletKpiValue">$ {this.getLatestBtc()}</h3>
+                  <h3 className="walletKpiValue">$ {this.getCurrentPrice()}</h3>
                 </div>
               </Col>
 
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder kpiHolder-last">
                   <p className="walletKpiName">Market Cap</p>
-                  <h3 className="walletKpiValue">$ 127.66B</h3>
+                  <h3 className="walletKpiValue">$ {this.formatCash(this.getMarketCap())}</h3>
                 </div>
               </Col>
             </Row>

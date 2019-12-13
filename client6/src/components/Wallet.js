@@ -18,7 +18,13 @@ class Wallet extends Component {
       reg_date: '',
       transaction_time: '',
       transactions: [],
-      btc_data: {}
+      btc_data: {},
+      coinmarket: [
+        {
+          price_usd: '',
+          market_cap_usd: ''
+        }
+      ]
     }
   }
 
@@ -52,6 +58,13 @@ class Wallet extends Component {
           btc_data: data
         })
       })
+      fetch('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
+      .then(data => data.json())
+      .then(data => {
+        this.setState({
+          coinmarket: data
+        })
+      });
       console.log("should work");
       console.log(this.state.wallet_name);
     })
@@ -81,6 +94,11 @@ class Wallet extends Component {
     }
   }
 
+  getCurrentPrice() {
+    var currentPrice = this.state.coinmarket[0].price_usd;
+    return (+(currentPrice)).toFixed(2);
+  }
+
   getLatestBtc() { // returns the oldest value
     var lastProp;
     for (var key in this.state.btc_data.bpi) {
@@ -92,15 +110,27 @@ class Wallet extends Component {
     return lastProp;
   }
 
+  getValueChange() {
+    var valuesArray = [];
+    for (var key in this.state.btc_data.bpi) {
+      var value = this.state.btc_data.bpi[key];
+      valuesArray.push(value)
+    }
+    var penultimateValue = valuesArray[valuesArray.length-2];
+    var diff = (this.getCurrentPrice() - penultimateValue);
+    return diff.toFixed(2);
+  }
+
   btcToUsd() {
     // const convertToUsd = (priceCharts.getLatestBtc() * this.state.balance_btc);
-    return (this.getLatestBtc() * this.state.balance_btc);
+    return (this.getCurrentPrice() * this.state.balance_btc);
   }
 
   render() {
     const { btc_data } = this.state;
     console.log(btc_data.bpi);
-    console.log(this.state.transactions);
+    console.log(this.getLatestBtc());
+    console.log(this.getValueChange());
     // console.log(this.getData());
     return (
       <Container fluid className="h-100">
@@ -111,7 +141,7 @@ class Wallet extends Component {
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder">
                   <p className="walletKpiName">24h Change</p>
-                  <h3 className="walletKpiValue">$ -247.45</h3>
+                  <h3 className="walletKpiValue">$ {this.getValueChange()}</h3>
                 </div>
               </Col>
 

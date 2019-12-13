@@ -85,14 +85,14 @@ class History extends Component {
       }
     });
 
-    var transactionItem = this.state.transactions.map(function(trans) {
+    var transactionItem1 = this.state.transactions.map(function(trans) {
       return {
         sender_id: trans.sender_id,
         receiver_id: trans.receiver_id
       }
     });
 
-    const dict = {transactionItem: walletItem}
+    const dict = {transactionItem1: walletItem}
     console.log(dict)
     return dict;
   }
