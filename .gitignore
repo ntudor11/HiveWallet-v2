@@ -9,6 +9,9 @@ coverage
 # production
 build
 
+# app
+HiveWallet-darwin-x64
+
 # misc
 .DS_Store
 .env
