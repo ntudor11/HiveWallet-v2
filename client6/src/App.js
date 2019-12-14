@@ -11,12 +11,6 @@ import LogSignIn from './components/LogSignIn';
 import LoginFirst from './components/LoginFirst';
 import LoginSecond from './components/LoginSecond';
 import SignupForm from './components/SignupForm';
-// import SignUpFirst from './components/SignUpFirst';
-// import SignUpSecond from './components/SignUpSecond';
-// import SignUpThird from './components/SignUpThird';
-// import SignUpFourth from './components/SignUpFourth';
-// import SignUpFifth from './components/SignUpFifth';
-// import SignUpSixth from './components/SignUpSixth';
 import NoMatch from './components/NotFound';
 
 class App extends Component {

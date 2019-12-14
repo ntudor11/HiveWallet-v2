@@ -9,6 +9,7 @@ import logo from '../images/logo-hive.svg';
 import InfoWhite from '../images/icons/information-white.svg';
 import { AiOutlineEyeInvisible } from "react-icons/ai"
 import {register} from './UserFunctions';
+import {NavLink } from "react-router-dom";
 var CoinKey = require('coinkey');
 
 class SignUpSeventh extends Component {
@@ -156,6 +157,19 @@ class SignUpSeventh extends Component {
                       onClick={this.continue}>Create Wallet
                     </Button>
                   </Col>
+                </Row>
+
+                <Row className="colsButtons">
+                  <Col sm={6}>
+                    <NavLink exact activeClassName="active" to="/" className="nav-link underline-from-center">
+                      <Button block
+                        variant="outline-primary"
+                        onClick={this.back}>Cancel
+                      </Button>
+                    </NavLink>
+                  </Col>
+
+                  <Col sm={6}></Col>
                 </Row>
               </Col>
               <Col sm={3} lg={4}></Col>

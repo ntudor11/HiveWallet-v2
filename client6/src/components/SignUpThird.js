@@ -6,7 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import logo from '../images/logo-hive.svg';
-import doge from '../images/doge.png';
+// import doge from '../images/doge.png';
 import InfoWhite from '../images/icons/information-white.svg';
 
 const dogeSeed = require('doge-seed');
@@ -53,9 +53,9 @@ class SignUpThird extends Component {
                     <Col sm={10}>
                       <Alert.Heading className="alertHeading" >Your Seed Phrase</Alert.Heading>
                       <p>Find below your wallet generation seed. Please save these 12 words in a safe place or download the corresponding QR code (the word’s order is important). This seed will allow you to recover your wallet, in case of a failure or a lost password. You will it need for backup and recovery purposes, so make sure you do not lose it!</p>
-                      <div style={{margin:"0 auto", width:"100px"}}>
+                      {/*<div style={{margin:"0 auto", width:"100px"}}>
                         <img src={doge} alt="doge-meme" style={{width:"100px", textAlign:"center"}}/>
-                      </div>
+                      </div> */}
                     </Col>
                   </Row>
                 </Alert>

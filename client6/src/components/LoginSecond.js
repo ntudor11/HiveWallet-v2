@@ -52,7 +52,7 @@ class LoginSecond extends Component {
                       </Col>
 
                       <Col sm={6}>
-                        <NavLink exact to="/dashboard"> {/*TODO replace this or not?? */}
+                        <NavLink exact to="/dashboard"> 
                           <Button type="submit" block variant="primary">Log In</Button>
                         </NavLink>
                       </Col>

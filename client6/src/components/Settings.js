@@ -90,7 +90,7 @@ class Settings extends Component {
               </Col>
               <Col sm={6} className="colsButtons">
                 <p className="settingsHeading">Wallet Data</p>
-                <NavLink exact to="/settings"> {/* TODO remove navlink and add another window to view the seed */}
+                <NavLink exact to="/settings">
                   <Button variant="outline-primary">Get Seed</Button>
                 </NavLink>
               </Col>
@@ -99,7 +99,7 @@ class Settings extends Component {
             <Row className="colsButtons">
               <Col sm={3} lg={4}></Col>
               <Col sm={6} lg={4}>
-                <NavLink exact to="/settings" className="demoHolder"> {/*TODO remove the navlink and update settings on button click?? */}
+                <NavLink exact to="/settings" className="demoHolder"> 
                   <Button block variant="primary">Save All</Button>
                   <span className="tooltiptext">This feature is coming soon.</span>
                 </NavLink>

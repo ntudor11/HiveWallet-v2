@@ -8,6 +8,10 @@ import Navbar from '../components/Navbar';
 import BitcoinLogo from '../images/icons/bitcoin-logo.svg';
 import jwt_decode from 'jwt-decode';
 
+var Chance = require('chance');
+
+var chance = new Chance();
+
 class Wallet extends Component {
   constructor(props) {
     super(props)
@@ -99,17 +103,6 @@ class Wallet extends Component {
     return (+(currentPrice)).toFixed(2);
   }
 
-  getLatestBtc() { // returns the oldest value
-    var lastProp;
-    for (var key in this.state.btc_data.bpi) {
-      if(this.state.btc_data.bpi.hasOwnProperty(key)) {
-        lastProp = this.state.btc_data.bpi[key];
-        // console.log(key+ " " + firstProp);
-      }
-    }
-    return lastProp;
-  }
-
   getValueChange() {
     var valuesArray = [];
     for (var key in this.state.btc_data.bpi) {
@@ -117,13 +110,21 @@ class Wallet extends Component {
       valuesArray.push(value)
     }
     var penultimateValue = valuesArray[valuesArray.length-2];
-    var diff = (this.getCurrentPrice() - penultimateValue);
+    var diff = (this.getCurrentPrice()*this.state.balance_btc - penultimateValue*this.state.balance_btc);
     return diff.toFixed(2);
   }
 
   btcToUsd() {
     // const convertToUsd = (priceCharts.getLatestBtc() * this.state.balance_btc);
     return (this.getCurrentPrice() * this.state.balance_btc);
+  }
+
+  formatCash = n => {
+    if (n < 1e5) return n.toFixed(2);
+    if (n >= 1e5 && n < 1e6) return +(n / 1e3).toFixed(2) + "K";
+    if (n >= 1e6 && n < 1e9) return +(n / 1e6).toFixed(2) + "M";
+    if (n >= 1e9 && n < 1e12) return +(n / 1e9).toFixed(2) + "B";
+    // if (n >= 1e12) return +(n / 1e12).toFixed(1) + "T";
   }
 
   render() {
@@ -143,7 +144,7 @@ class Wallet extends Component {
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder">
                   <p className="walletKpiName">Best 24h Growth</p>
-                  <h3 className="walletKpiValue">$ +971.32</h3>
+                  <h3 className="walletKpiValue">$ {chance.floating({min:1250.24, max:1442.41}).toFixed(2)}</h3>
                 </div>
               </Col>
 
@@ -162,7 +163,7 @@ class Wallet extends Component {
                 <img src={BitcoinLogo} alt="bitcoin-logo"/>
                 <div className="balanceContainer">
                   <h2 className="btcBalance">{this.state.balance_btc} BTC</h2>
-                  <h4 className="btcBalanceUSD">$ {this.btcToUsd()}</h4>
+                  <h4 className="btcBalanceUSD">$ {this.formatCash(this.btcToUsd())}</h4>
                 </div>
               </Col>
               <Col sm={4}></Col>
@@ -171,7 +172,7 @@ class Wallet extends Component {
             <Row className="colsButtons" style={{marginTop:"2em"}}>
               <Col sm={2}></Col>
 
-              <Col sm={4}> {/* TODO Remove following navlink*/}
+              <Col sm={4}>
                 <NavLink exact to="/transactions">
                   <Button type="submit" block variant="primary">Receive</Button>
                 </NavLink>
