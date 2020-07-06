@@ -19,12 +19,7 @@ class PriceCharts extends Component {
         labels: [],
         datasets: []
       },
-      coinmarket: [
-        {
-          price_usd: '',
-          market_cap_usd: ''
-        }
-      ]
+      coinmarket: {}
     }
   }
 
@@ -45,7 +40,7 @@ class PriceCharts extends Component {
           // data.labels:
         });
       })
-      fetch('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
+      fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
       .then(data => data.json())
       .then(data => {
         this.setState({
@@ -80,21 +75,18 @@ class PriceCharts extends Component {
       var value = this.state.data.bpi[key];
       testData.datasets[0].data.push(value);
     }
-
-    console.log(testData.datasets[0]);
-    console.log(this.state.data);
-
+    // console.log(testData.datasets[0]);
     return testData;
+  }
+
+  getCurrentValue() {
+    const currentBtcValue = this.state.coinmarket.bpi && parseFloat(this.state.coinmarket.bpi.USD.rate.replace(/,/g, '')).toFixed(2);
+    return currentBtcValue;
   }
 
   getMarketCap(){
     var marketCap = this.state.coinmarket[0].market_cap_usd;
     return marketCap;
-  }
-
-  getCurrentPrice() {
-    var currentPrice = this.state.coinmarket[0].price_usd;
-    return (+(currentPrice)).toFixed(2);
   }
 
   formatCash = n => {
@@ -106,7 +98,6 @@ class PriceCharts extends Component {
   }
 
   render() {
-
     return (
       <Container fluid className="h-100">
         <Row>
@@ -122,14 +113,14 @@ class PriceCharts extends Component {
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder">
                   <p className="walletKpiName">Current Value</p>
-                  <h3 className="walletKpiValue">$ {this.getCurrentPrice()}</h3>
+                  <h3 className="walletKpiValue">$ {this.getCurrentValue()}</h3>
                 </div>
               </Col>
 
               <Col sm={4} className="walletKpi align-items-center">
                 <div className="kpiHolder kpiHolder-last">
                   <p className="walletKpiName">Market Cap</p>
-                  <h3 className="walletKpiValue">$ {this.formatCash(this.getMarketCap())}</h3>
+                  {/* <h3 className="walletKpiValue">$ {this.formatCash(this.getMarketCap())}</h3> */}
                 </div>
               </Col>
             </Row>

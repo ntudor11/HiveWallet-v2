@@ -23,12 +23,7 @@ class Wallet extends Component {
       transaction_time: '',
       transactions: [],
       btc_data: {},
-      coinmarket: [
-        {
-          price_usd: '',
-          market_cap_usd: ''
-        }
-      ]
+      coinmarket: {}
     }
   }
 
@@ -62,7 +57,7 @@ class Wallet extends Component {
           btc_data: data
         })
       })
-      fetch('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
+      fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
       .then(data => data.json())
       .then(data => {
         this.setState({
@@ -98,9 +93,9 @@ class Wallet extends Component {
     }
   }
 
-  getCurrentPrice() {
-    var currentPrice = this.state.coinmarket[0].price_usd;
-    return (+(currentPrice)).toFixed(2);
+  getCurrentValue() {
+    const currentBtcValue = this.state.coinmarket.bpi && parseFloat(this.state.coinmarket.bpi.USD.rate.replace(/,/g, '')).toFixed(2);
+    return currentBtcValue;
   }
 
   getValueChange() {
@@ -110,13 +105,13 @@ class Wallet extends Component {
       valuesArray.push(value)
     }
     var penultimateValue = valuesArray[valuesArray.length-2];
-    var diff = (this.getCurrentPrice()*this.state.balance_btc - penultimateValue*this.state.balance_btc);
+    var diff = (this.getCurrentValue()*this.state.balance_btc - penultimateValue*this.state.balance_btc);
     return diff.toFixed(2);
   }
 
   btcToUsd() {
     // const convertToUsd = (priceCharts.getLatestBtc() * this.state.balance_btc);
-    return (this.getCurrentPrice() * this.state.balance_btc);
+    return (this.getCurrentValue() * this.state.balance_btc);
   }
 
   formatCash = n => {

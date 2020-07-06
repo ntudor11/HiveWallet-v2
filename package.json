@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js & cd client6 && react-scripts start",
+    "electron": "cd client6 && electron ."
   },
   "author": "",
   "license": "ISC",
@@ -19,5 +20,8 @@
     "nodemon": "^1.19.4",
     "react-step-progress-bar": "^1.0.3",
     "sequelize": "^5.19.6"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.11.0"
   }
 }
