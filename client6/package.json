@@ -23,7 +23,7 @@
     "chart.js": "^2.9.4",
     "coinkey": "^3.0.0",
     "doge-seed": "^1.0.0",
-    "electron": "^15.5.5",
+    "electron": "^18.3.7",
     "jwt-decode": "^2.2.0",
     "npm-check": "^5.9.0",
     "qr-encode": "^0.3.0",
