@@ -22,7 +22,7 @@
     "mysql2": "^1.7.0",
     "nodemon": "^2.0.20",
     "react-step-progress-bar": "^1.0.3",
-    "sequelize": "^5.19.6"
+    "sequelize": "^6.28.2"
   },
   "devDependencies": {
     "electron-rebuild": "^1.11.0"
