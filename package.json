@@ -25,6 +25,6 @@
     "sequelize": "^6.29.0"
   },
   "devDependencies": {
-    "electron-rebuild": "^1.11.0"
+    "electron-rebuild": "^3.2.9"
   }
 }
