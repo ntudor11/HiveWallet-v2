@@ -4931,7 +4931,7 @@ electron@^22.3.25:
     "@types/node" "^16.11.26"
     extract-zip "^2.0.1"
 
-elliptic@^6.4.1:
+elliptic@^6.5.7:
   version "6.5.7"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.7.tgz#8ec4da2cb2939926a1b9a73619d768207e647c8b"
   integrity sha512-ESVCtTwiA+XhY3wyh24QqRGBoP3rEdDUl3EDUUo9tft074fi19IrdpH7hLCMMP3CIj7jb3W96rn8lt/BqIlt5Q==
@@ -10523,16 +10523,16 @@ schema-utils@^4.0.0:
     ajv-keywords "^5.0.0"
 
 secp256k1@^3.0.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-3.7.1.tgz#12e473e0e9a7c2f2d4d4818e722ad0e14cc1e2f1"
-  integrity sha512-1cf8sbnRreXrQFdH6qsg2H71Xw91fCCS9Yp021GnUNJzWJS/py96fS4lHbnTnouLp08Xj6jBoBB6V78Tdbdu5g==
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-3.8.1.tgz#b62a62a882d6b16f9b51fe599c6b3a861e36c59f"
+  integrity sha512-tArjQw2P0RTdY7QmkNehgp6TVvQXq6ulIhxv8gaH6YubKG/wxxAoNKcbuXjDhybbc+b2Ihc7e0xxiGN744UIiQ==
   dependencies:
     bindings "^1.5.0"
     bip66 "^1.1.5"
     bn.js "^4.11.8"
     create-hash "^1.2.0"
     drbg.js "^1.0.1"
-    elliptic "^6.4.1"
+    elliptic "^6.5.7"
     nan "^2.14.0"
     safe-buffer "^5.1.2"
 
